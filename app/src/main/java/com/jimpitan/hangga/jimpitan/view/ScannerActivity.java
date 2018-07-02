@@ -65,7 +65,7 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeRetriev
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this)
                         .setTitle("Yak, Masyuuuk.. ")
-                        .setTitle("Hangga Aji Sayekti \n Masukkan Nominal \n ")
+                        .setMessage("Nama: "+barcode.displayValue+"\n Masukkan Nominal \n ")
                         .setView(input)
                         .setPositiveButton("Kirim", new DialogInterface.OnClickListener() {
                             @Override
