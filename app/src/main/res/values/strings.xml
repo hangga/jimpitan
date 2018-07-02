@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">jimpitan</string>
     <string name="title_activity_front">FrontActivity</string>
+    <string name="how_to">Dekatkan kamera dengan kotak jimpitan, lalu scan kode QR</string>
 </resources>

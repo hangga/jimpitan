@@ -8,8 +8,18 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/txtHowto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="@string/how_to"
+            android:textSize="18sp"
+            android:textColor="@color/color_brown"
+            />
         <fragment
             android:id="@+id/barcode"
+            android:layout_below="@+id/txtHowto"
             android:name="com.google.android.gms.samples.vision.barcodereader.BarcodeCapture"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
