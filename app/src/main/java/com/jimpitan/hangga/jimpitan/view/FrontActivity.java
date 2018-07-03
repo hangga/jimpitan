@@ -10,10 +10,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.jimpitan.hangga.jimpitan.R;
+import com.jimpitan.hangga.jimpitan.model.Warga;
+import com.jimpitan.hangga.jimpitan.presenter.DaoImplementation;
+
+import java.util.List;
 
 public class FrontActivity extends AppCompatActivity {
 
     private ProgressBar progressbar;
+    private DaoImplementation daoImplementation;
+
+    private List<Warga> wargas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +28,18 @@ public class FrontActivity extends AppCompatActivity {
         setContentView(R.layout.activity_front);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        daoImplementation = new DaoImplementation(this);
+
+        wargas = daoImplementation.getWargas();
+        if (wargas.size() == 0){
+            daoImplementation.insert(new Warga(0, "Muhammad bin Abdullah"));
+            daoImplementation.insert(new Warga(1, "Ahmad bin Abdurrahim"));
+            daoImplementation.insert(new Warga(2, "Abu Ummar Abdillah"));
+            daoImplementation.insert(new Warga(3, "Muhammad bin Abdul Ghani"));
+            daoImplementation.insert(new Warga(4, "Maryam"));
+            daoImplementation.insert(new Warga(5, "Khadijah"));
+        }
 
         //progressbar = (ProgressBar) findViewById(R.id.progressbar);
 
