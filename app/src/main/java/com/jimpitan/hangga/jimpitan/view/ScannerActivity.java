@@ -3,9 +3,11 @@ package com.jimpitan.hangga.jimpitan.view;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.util.SparseArray;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,6 +16,7 @@ import android.widget.ProgressBar;
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
 import com.google.android.gms.samples.vision.barcodereader.BarcodeGraphic;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.j256.ormlite.stmt.query.In;
 import com.jimpitan.hangga.jimpitan.R;
 
 import java.util.List;
@@ -31,16 +34,10 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeRetriev
 
         barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
 
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         barcodeCapture.setShowDrawRect(true)
                 //.setSupportMultipleScan(supportMultiple.isChecked())
                 //.setTouchAsCallback(touchBack.isChecked())
-                //.shouldAutoFocus(true)
+                .shouldAutoFocus(true)
                 //.setShowFlash(flash.isChecked())
                 .setBarcodeFormat(Barcode.ALL_FORMATS);
         //.setCameraFacing(frontCam.isChecked() ? CameraSource.CAMERA_FACING_FRONT : CameraSource.CAMERA_FACING_BACK)
@@ -51,8 +48,21 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeRetriev
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     public void onRetrieved(final Barcode barcode) {
-        runOnUiThread(new Runnable() {
+
+        Log.d("JIMPITAN", barcode.displayValue);
+
+        Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
+        intent.putExtra("id", Integer.parseInt(barcode.displayValue));
+        startActivity(intent);
+
+        /*runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 EditText input = new EditText(ScannerActivity.this);
@@ -85,7 +95,7 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeRetriev
                 builder.show();
                 //input.setText(barcode.displayValue);
             }
-        });
+        });*/
     }
 
     @Override

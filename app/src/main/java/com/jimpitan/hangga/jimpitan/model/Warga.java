@@ -18,6 +18,10 @@ public class Warga {
     @DatabaseField(columnName = COLUMN_NAME)
     private String name;
 
+    public Warga(){
+
+    }
+
     public Warga(int id, String name) {
         this.id = id;
         this.name = name;

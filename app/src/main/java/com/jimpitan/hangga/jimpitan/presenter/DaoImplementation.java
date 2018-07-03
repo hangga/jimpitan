@@ -65,7 +65,8 @@ public class DaoImplementation implements DaoPresenter {
     @Override
     public Warga getWarga(int id) {
         try {
-            return wargas.queryForId(id);
+            return wargas.queryForEq("id", id).get(0);
+            //return wargas.queryForId(id);
         }catch (SQLException ex){
             return null;
         }

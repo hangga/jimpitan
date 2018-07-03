@@ -7,18 +7,25 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
+import com.jimpitan.hangga.jimpitan.model.Warga;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * A login screen that offers login via email/password.
  */
-public class InputActivity extends AppCompatActivity /*implements LoaderCallbacks<Cursor> */ {
+public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cursor> */ {
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -34,13 +41,74 @@ public class InputActivity extends AppCompatActivity /*implements LoaderCallback
     private View mProgressView;
     private View mFormView;
 
+    private TextView txtNama;
+    private int id;
+    private Warga warga;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         // Set up the login form.
         mNominal = (EditText) findViewById(R.id.nominal);
+        mNominal.addTextChangedListener(new TextWatcher() {
+            private String current = "";
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!s.toString().equals(current)) {
+                    mNominal.removeTextChangedListener(this);
+
+                    Locale local = new Locale("id", "id");
+                    String replaceable = String.format("[Rp,.\\s]",
+                            NumberFormat.getCurrencyInstance().getCurrency()
+                                    .getSymbol(local));
+                    String cleanString = s.toString().replaceAll(replaceable,
+                            "");
+
+                    double parsed;
+                    try {
+                        parsed = Double.parseDouble(cleanString);
+                    } catch (NumberFormatException e) {
+                        parsed = 0.00;
+                    }
+
+                    NumberFormat formatter = NumberFormat
+                            .getCurrencyInstance(local);
+                    formatter.setMaximumFractionDigits(0);
+                    formatter.setParseIntegerOnly(true);
+                    String formatted = formatter.format((parsed));
+
+                    String replace = String.format("[Rp\\s]",
+                            NumberFormat.getCurrencyInstance().getCurrency()
+                                    .getSymbol(local));
+                    String clean = formatted.replaceAll(replace, "");
+
+                    current = formatted;
+                    mNominal.setText(clean);
+                    mNominal.setSelection(clean.length());
+                    mNominal.addTextChangedListener(this);
+                }
+            }
+        });
+
+        txtNama = (TextView) findViewById(R.id.txtNama);
+
+        id = getIntent().getIntExtra("id", -1);
+
+        if (id > -1){
+            warga = getWarga(id); //daoImplementation.getWarga(id);
+            txtNama.setText(warga.getName());
+        }
 
         Button mSendButton = (Button) findViewById(R.id.sendBtn);
         mSendButton.setOnClickListener(new OnClickListener() {
