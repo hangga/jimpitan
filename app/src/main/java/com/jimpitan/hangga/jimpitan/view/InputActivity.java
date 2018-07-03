@@ -156,9 +156,9 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            //mAuthTask = new sendJimpitanTask(id, nominal); sementara
-            mAuthTask.execute((Void) null);
+            showProgress(true);/*
+            mAuthTask = new sendJimpitanTask(id, nominal);
+            mAuthTask.execute((Void) null);*/
         }
     }
 

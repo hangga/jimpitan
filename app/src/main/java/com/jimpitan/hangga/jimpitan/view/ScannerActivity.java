@@ -56,11 +56,16 @@ public class ScannerActivity extends AppCompatActivity implements BarcodeRetriev
     @Override
     public void onRetrieved(final Barcode barcode) {
 
-        Log.d("JIMPITAN", barcode.displayValue);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
+                intent.putExtra("id", Integer.parseInt(barcode.displayValue));
+                startActivity(intent);
+            }
+        });
 
-        Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
-        intent.putExtra("id", Integer.parseInt(barcode.displayValue));
-        startActivity(intent);
+
 
         /*runOnUiThread(new Runnable() {
             @Override

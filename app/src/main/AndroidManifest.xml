@@ -28,12 +28,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.ScannerActivity" />
-        <!--
-            <activity
-            android:name=".view.FrontActivity"
-            android:label="@string/title_activity_front"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        -->
+
         <activity
             android:name="com.jimpitan.hangga.jimpitan.view.InputActivity"
             android:label="@string/title_activity_input"></activity>
