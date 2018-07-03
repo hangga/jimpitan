@@ -30,5 +30,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'xyz.belvi.mobilevision:barcodescanner:2.0.3'
-    //implementation 'com.github.KingsMentor:MobileVisionBarcodeScanner:2.0.0'
+    implementation 'com.j256.ormlite:ormlite-android:5.1'
 }
