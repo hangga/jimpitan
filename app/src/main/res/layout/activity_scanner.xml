@@ -28,10 +28,10 @@
             app:gvb_flash="false"
             app:gvb_rect_colors="@array/rect_color" />
 
-        <!--<ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+        <ImageView
+            android:layout_width="256dp"
+            android:layout_height="256dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/ic_if_maximize"/>-->
+            android:background="@mipmap/ic_view_finder"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
