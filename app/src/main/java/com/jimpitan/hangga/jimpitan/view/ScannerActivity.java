@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.util.SparseArray;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
 import com.google.android.gms.samples.vision.barcodereader.BarcodeGraphic;
@@ -23,103 +25,80 @@ import java.util.List;
 
 import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
-public class ScannerActivity extends AppCompatActivity implements BarcodeRetriever {
+public class ScannerActivity extends AppCompatActivity  {
 
     private BarcodeCapture barcodeCapture;
+    private Switch swtcFlash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner);
 
+        swtcFlash = (Switch) findViewById(R.id.swtcFlash);
+
         barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
 
-        barcodeCapture.setShowDrawRect(true)
-                //.setSupportMultipleScan(supportMultiple.isChecked())
-                //.setTouchAsCallback(touchBack.isChecked())
-                .shouldAutoFocus(true)
-                //.setShowFlash(flash.isChecked())
-                .setBarcodeFormat(Barcode.ALL_FORMATS);
-        //.setCameraFacing(frontCam.isChecked() ? CameraSource.CAMERA_FACING_FRONT : CameraSource.CAMERA_FACING_BACK)
-        //.setShouldShowText(drawText.isChecked());
+        swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                initCamera();
+            }
+        });
 
-        barcodeCapture.setRetrieval(this);
-        barcodeCapture.refresh();
+        initCamera();
+    }
+
+    private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
+        @Override
+        public void onRetrieved(Barcode barcode) {
+            Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
+            intent.putExtra("id", Integer.parseInt(barcode.displayValue));
+            startActivity(intent);
+        }
+
+        @Override
+        public void onRetrievedMultiple(Barcode closetToClick, List<BarcodeGraphic> barcode) {
+
+        }
+
+        @Override
+        public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+
+        }
+
+        @Override
+        public void onRetrievedFailed(String reason) {
+
+        }
+
+        @Override
+        public void onPermissionRequestDenied() {
+
+        }
+    };
+
+    private void initCamera(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                barcodeCapture.setShowDrawRect(true)
+                        //.setSupportMultipleScan(supportMultiple.isChecked())
+                        //.setTouchAsCallback(touchBack.isChecked())
+                        .shouldAutoFocus(true)
+                        .setShowFlash(swtcFlash.isChecked())
+                        .setBarcodeFormat(Barcode.ALL_FORMATS);
+                //.setCameraFacing(frontCam.isChecked() ? CameraSource.CAMERA_FACING_FRONT : CameraSource.CAMERA_FACING_BACK)
+                //.setShouldShowText(drawText.isChecked());
+
+                barcodeCapture.setRetrieval(barcodeRetriever);
+                barcodeCapture.refresh();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-    }
-
-    @Override
-    public void onRetrieved(final Barcode barcode) {
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
-                intent.putExtra("id", Integer.parseInt(barcode.displayValue));
-                startActivity(intent);
-            }
-        });
-
-
-
-        /*runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                EditText input = new EditText(ScannerActivity.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-                input.setLayoutParams(lp);
-                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                input.requestFocus();
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(ScannerActivity.this)
-                        .setTitle("Yak, Masyuuuk.. ")
-                        .setMessage("Nama: "+barcode.displayValue+"\n Masukkan Nominal \n ")
-                        .setView(input)
-                        .setPositiveButton("Kirim", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        })
-                        .setNegativeButton("Batal", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.dismiss();
-                            }
-                        });
-
-
-                        //.setMessage();
-                builder.show();
-                //input.setText(barcode.displayValue);
-            }
-        });*/
-    }
-
-    @Override
-    public void onRetrievedMultiple(Barcode closetToClick, List<BarcodeGraphic> barcode) {
-
-    }
-
-    @Override
-    public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
-
-    }
-
-    @Override
-    public void onRetrievedFailed(String reason) {
-
-    }
-
-    @Override
-    public void onPermissionRequestDenied() {
-
     }
 }

@@ -6,6 +6,9 @@
     <string name="save">Simpan</string>
     <string name="nominal">Nominal</string>
     <string name="kososng">Tidak boleh kosong</string>
+    <string name="off">Off</string>
+    <string name="on">On</string>
+    <string name="lampu">Lampu</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
