@@ -12,7 +12,7 @@ import java.util.List;
 public class Getwarga {
     @SerializedName("status")
     String status;
-    @SerializedName("result") // kalo pake result error ganti records
+    @SerializedName("records")
             List<Warga> listDataWarga;
     @SerializedName("message")
     String message;
