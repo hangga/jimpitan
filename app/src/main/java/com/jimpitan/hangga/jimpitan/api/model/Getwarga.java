@@ -13,7 +13,19 @@ public class Getwarga {
     @SerializedName("status")
     String status;
     @SerializedName("result") // kalo pake result error ganti records
-    List<Warga> listDataWarga;
+            List<Warga> listDataWarga;
     @SerializedName("message")
     String message;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public List<Warga> getListDataWarga() {
+        return listDataWarga;
+    }
 }
