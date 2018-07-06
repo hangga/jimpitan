@@ -1,6 +1,6 @@
 package com.jimpitan.hangga.jimpitan.presenter;
 
-import com.jimpitan.hangga.jimpitan.model.Warga;
+import com.jimpitan.hangga.jimpitan.db.model.Warga;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.jimpitan.hangga.jimpitan.db.DbHelper;
-import com.jimpitan.hangga.jimpitan.model.Warga;
+import com.jimpitan.hangga.jimpitan.db.model.Warga;
 
 import java.sql.SQLException;
 import java.util.List;

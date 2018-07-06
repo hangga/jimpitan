@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,7 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
-import com.jimpitan.hangga.jimpitan.model.Warga;
+import com.jimpitan.hangga.jimpitan.db.model.Warga;
 
 import java.text.NumberFormat;
 import java.util.Locale;

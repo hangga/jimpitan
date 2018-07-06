@@ -1,4 +1,4 @@
-package com.jimpitan.hangga.jimpitan.model;
+package com.jimpitan.hangga.jimpitan.db.model;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
