@@ -1,18 +1,11 @@
 package com.jimpitan.hangga.jimpitan.view;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
-import android.util.Log;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Switch;
 
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
@@ -25,36 +18,24 @@ import java.util.List;
 
 import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
-public class ScannerActivity extends AppCompatActivity  {
+import static java.lang.Integer.parseInt;
+
+public class ScannerActivity extends BaseActivity {
 
     private BarcodeCapture barcodeCapture;
     private Switch swtcFlash;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scanner);
-
-        swtcFlash = (Switch) findViewById(R.id.swtcFlash);
-
-        barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
-
-        swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                initCamera();
-            }
-        });
-
-        initCamera();
-    }
-
     private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
         @Override
         public void onRetrieved(Barcode barcode) {
-            Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
-            intent.putExtra("id", Integer.parseInt(barcode.displayValue));
-            startActivity(intent);
+            int id = Integer.parseInt(barcode.displayValue);
+            if (daoImplementation.getWarga(id) != null){
+                Intent intent = new Intent(ScannerActivity.this, InputActivity.class);
+                intent.putExtra("id", parseInt(barcode.displayValue));
+                startActivity(intent);
+            } else {
+                Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
+            }
+
         }
 
         @Override
@@ -78,7 +59,27 @@ public class ScannerActivity extends AppCompatActivity  {
         }
     };
 
-    private void initCamera(){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_scanner);
+        initToolBar();
+
+        swtcFlash = (Switch) findViewById(R.id.swtcFlash);
+
+        barcodeCapture = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
+
+        swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                initCamera();
+            }
+        });
+
+        initCamera();
+    }
+
+    private void initCamera() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

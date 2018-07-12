@@ -3,19 +3,17 @@ https://drive.google.com/open?id=1mgHj9W2WEpubMamySgVrDukhJ65ZHQN1fJS9uy7NJrw
 
 1. Insert Jimpitan
 
-https://script.google.com/macros/s/AKfycbzpcp7YIGhJfGzb_nx9tbYBx_3E2OIsoEOEhrZNkNEq3bALf_c/exec?id=1mgHj9W2WEpubMamySgVrDukhJ65ZHQN1fJS9uy7NJrw&sheet=jimpit
+https://script.google.com/macros/s/AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec?id=1mgHj9W2WEpubMamySgVrDukhJ65ZHQN1fJS9uy7NJrw&sheet=jimpit&hari=Selasa&tanggal=18-Januari-2018&jam=00:00&nama=Hangga Aji Sayekti&nominal=1000
 
-method POST
-param
-========
-hari
-tanggal
-jam
-nama
-nominal
 
 
 2. Data warga
 method GET
 
+https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec
+
 https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?id=1mgHj9W2WEpubMamySgVrDukhJ65ZHQN1fJS9uy7NJrw&sheet=warga
+
+atau
+
+https://script.googleusercontent.com/macros/echo?user_content_key=-3oa62MR0KsRoBsu0w5E6rQBJ0T4xt6mI2Hn5lkrw1a8_mOFnadRXFbMNUf8a6qf_Kqs_k2CK5j2obPoYeSOUjqI1VQbFgn7OJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa3rGbbC4Xqw1vW7vGKX7thxWx819y6NHtYjtoGDOkxelUg1H58VBwKrJAzvSbOCvPoJj-KLuzndSx0cuVxt7MUDHKxzHyuSphcvmGMkYLvqLve0OwB-BIQ7K1X8Fl0eef5KFt2as-0-PGetL3GQdFGsic-sh0Ed9wA&lib=MtT8W3ZcddabhB9VJr109MecGKYnEG-0-

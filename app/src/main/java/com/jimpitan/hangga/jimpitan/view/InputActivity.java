@@ -48,6 +48,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
+        initToolBar();
         // Set up the login form.
         mNominal = (EditText) findViewById(R.id.nominal);
         mNominal.addTextChangedListener(new TextWatcher() {

@@ -17,9 +17,7 @@ public class FrontActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        initToolBar();
 
         //progressbar = (ProgressBar) findViewById(R.id.progressbar);
 
