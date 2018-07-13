@@ -15,6 +15,15 @@ public interface ApiInterface {
     Call<Getwarga> getWarga();
 
     @FormUrlEncoded
-    @POST("https://script.google.com/macros/s/AKfycbzpcp7YIGhJfGzb_nx9tbYBx_3E2OIsoEOEhrZNkNEq3bALf_c/exec?id=1mgHj9W2WEpubMamySgVrDukhJ65ZHQN1fJS9uy7NJrw&sheet=jimpit")
-    Call<PostJimpitan> postKontak(@Field("nama") String nama, @Field("nomor") String nomor);
+    @POST("https://script.google.com/macros/s/AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec")
+    Call<PostJimpitan> postJimpitan(@Field("id") String id,
+                                  @Field("sheet") String sheet,
+                                  @Field("hari") String hari,
+                                  @Field("tanggal") String tanggal,
+                                  @Field("bulan") String bulan,
+                                  @Field("tahun") String tahun,
+                                  @Field("jam") String jam,
+                                  @Field("nama") String nama,
+                                  @Field("nominal") int nominal
+    );
 }

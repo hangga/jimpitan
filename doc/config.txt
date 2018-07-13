@@ -1,0 +1,17 @@
+define('DB_NAME', 'qgbbubub_jimpitan');
+
+/** MySQL database username */
+define('DB_USER', 'qgbbubub_hangga');
+
+/** MySQL database password */
+define('DB_PASSWORD', 'bismillah123456');
+
+/** MySQL hostname */
+define('DB_HOST', 'localhost');
+
+
+test
+
+mysql -u user_name -h mysql_server_ip_address_here -p db_name_here
+
+mysql -u qgbbubub_hangga -h 149.56.113.155 -p qgbbubub_jimpitan

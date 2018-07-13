@@ -16,10 +16,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
+import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
+import com.jimpitan.hangga.jimpitan.util.Utils;
 
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A login screen that offers login via email/password.
@@ -40,9 +50,32 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     private View mProgressView;
     private View mFormView;
 
-    private TextView txtNama;
+    private TextView txtDay, txtNama;
     private int id;
     private Warga warga;
+
+    private int jam, day, year, month;
+    private String hari;
+
+    private void initDate(){
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat hariIna = new SimpleDateFormat("EEEE");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Jakarta");
+
+        hariIna.setTimeZone(tz);
+
+        jam = c.get(Calendar.HOUR);
+        day = c.get(Calendar.DATE);
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+
+        hari = hariIna.format(day);
+
+        txtDay.setText("Hari : "+hari+"\n");
+        txtDay.append("Tanggal : "+simpleDateFormat.format(day)+"\n");
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +83,9 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         setContentView(R.layout.activity_input);
         initToolBar();
         // Set up the login form.
+        txtDay = (TextView) findViewById(R.id.txtDay);
+        initDate();
+
         mNominal = (EditText) findViewById(R.id.nominal);
         mNominal.addTextChangedListener(new TextWatcher() {
             private String current = "";
@@ -130,6 +166,26 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
      * errors are presented and no actual login attempt is made.
      */
     private void attemptSend() {
+
+        String sNominal = mNominal.getText().toString().replace(".","");
+        int nominal = Integer.parseInt(sNominal);
+
+        mApiInterface.postJimpitan(Utils.SpreedsheetId,
+                "jimpit", hari, String.valueOf(day), String.valueOf(month),
+                String.valueOf(year), String.valueOf(jam),
+                txtNama.getText().toString(), nominal).enqueue(new Callback<PostJimpitan>() {
+            @Override
+            public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
+                response.message();
+            }
+
+            @Override
+            public void onFailure(Call<PostJimpitan> call, Throwable t) {
+
+            }
+        });
+
+        /*
         if (mAuthTask != null) {
             return;
         }
@@ -156,10 +212,10 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);/*
+            showProgress(true);*//*
             mAuthTask = new sendJimpitanTask(id, nominal);
-            mAuthTask.execute((Void) null);*/
-        }
+            mAuthTask.execute((Void) null);*//*
+        }*/
     }
 
     /**

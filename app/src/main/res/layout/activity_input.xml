@@ -44,6 +44,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtDay"
+                android:layout_margin="4dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_blue"
+                android:textSize="18sp"
+                android:text="@string/nominal"/>
+
+
             <TextView
                 android:id="@+id/txtNama"
                 android:layout_margin="4dp"
