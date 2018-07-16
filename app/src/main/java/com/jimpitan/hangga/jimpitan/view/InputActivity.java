@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +22,6 @@ import com.jimpitan.hangga.jimpitan.util.Utils;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -57,7 +55,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     private int jam, day, year, month;
     private String hari;
 
-    private void initDate(){
+    private void initDate() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat hariIna = new SimpleDateFormat("EEEE");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -72,8 +70,8 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
 
         hari = hariIna.format(day);
 
-        txtDay.setText("Hari : "+hari+"\n");
-        txtDay.append("Tanggal : "+simpleDateFormat.format(day)+"\n");
+        txtDay.setText("Hari : " + hari + "\n");
+        txtDay.append("Tanggal : " + simpleDateFormat.format(day) + "\n");
 
     }
 
@@ -89,6 +87,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         mNominal = (EditText) findViewById(R.id.nominal);
         mNominal.addTextChangedListener(new TextWatcher() {
             private String current = "";
+
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
@@ -141,7 +140,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
 
         id = getIntent().getIntExtra("id", -1);
 
-        if (id > -1){
+        if (id > -1) {
             warga = getWarga(id); //daoImplementation.getWarga(id);
             txtNama.setText(warga.getName());
         }
@@ -159,7 +158,6 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     }
 
 
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -167,16 +165,22 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
      */
     private void attemptSend() {
 
-        String sNominal = mNominal.getText().toString().replace(".","");
+        String sNominal = mNominal.getText().toString().replace(".", "");
         int nominal = Integer.parseInt(sNominal);
 
         mApiInterface.postJimpitan(Utils.SpreedsheetId,
-                "jimpit", hari, String.valueOf(day), String.valueOf(month),
-                String.valueOf(year), String.valueOf(jam),
-                txtNama.getText().toString(), nominal).enqueue(new Callback<PostJimpitan>() {
+                "jimpit",
+                hari,
+                String.valueOf(day),
+                String.valueOf(month),
+                String.valueOf(year),
+                String.valueOf(jam),
+                txtNama.getText().toString(),
+                nominal).enqueue(new Callback<PostJimpitan>() {
             @Override
             public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
-                response.message();
+                finish();
+                //response.message();
             }
 
             @Override
@@ -185,37 +189,6 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             }
         });
 
-        /*
-        if (mAuthTask != null) {
-            return;
-        }
-
-        mNominal.setError(null);
-
-        // Store values at the time of the login attempt.
-        String nominal = mNominal.getText().toString();
-
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(nominal)) {
-            mNominal.setError(getString(R.string.kososng));
-            focusView = mNominal;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);*//*
-            mAuthTask = new sendJimpitanTask(id, nominal);
-            mAuthTask.execute((Void) null);*//*
-        }*/
     }
 
     /**
