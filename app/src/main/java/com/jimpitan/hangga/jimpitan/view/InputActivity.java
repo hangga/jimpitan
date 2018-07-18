@@ -56,22 +56,28 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     private String hari;
 
     private void initDate() {
-        Calendar c = Calendar.getInstance();
         SimpleDateFormat hariIna = new SimpleDateFormat("EEEE");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         TimeZone tz = TimeZone.getTimeZone("Asia/Jakarta");
 
+        SimpleDateFormat sJamFormat = new SimpleDateFormat("K:mm");
+
+        //String sJam =
+
+
         hariIna.setTimeZone(tz);
+
+        Calendar c = Calendar.getInstance();
 
         jam = c.get(Calendar.HOUR);
         day = c.get(Calendar.DATE);
         year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
+        month = c.get(Calendar.MONTH + 1);
 
         hari = hariIna.format(day);
-
-        txtDay.setText("Hari : " + hari + "\n");
-        txtDay.append("Tanggal : " + simpleDateFormat.format(day) + "\n");
+        txtDay.setText(sJamFormat.format(c.getTime())+"\n\n");
+        txtDay.append("Hari : " + hari + "\n");
+        txtDay.append("Tanggal : " + simpleDateFormat.format(c.getTime()) + "\n");
 
     }
 

@@ -9,6 +9,8 @@ import android.widget.ProgressBar;
 
 import com.jimpitan.hangga.jimpitan.R;
 
+import static java.lang.Integer.parseInt;
+
 public class FrontActivity extends BaseActivity {
 
     private ProgressBar progressbar;
@@ -25,12 +27,15 @@ public class FrontActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //progressbar.setVisibility(View.VISIBLE);
-
+                /*
+                di blok dulu sementara
                 startActivity(new Intent(FrontActivity.this, ScannerActivity.class));
-                //progressbar.setVisibility(View.INVISIBLE);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                */
+
+                // nah yg ini dummy
+                Intent intent = new Intent(FrontActivity.this, InputActivity.class);
+                intent.putExtra("id", 2);
+                startActivity(intent);
             }
         });
     }

@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_blue"
                 android:textSize="18sp"
-                android:text="@string/nominal"/>
+                android:text="@string/app_name"/>
 
 
             <TextView
