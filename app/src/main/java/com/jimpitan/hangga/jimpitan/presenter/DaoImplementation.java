@@ -27,6 +27,7 @@ public class DaoImplementation implements DaoPresenter {
         dbHelper = new DbHelper(ctx);
         try {
             wargas = dbHelper.getWargas();
+            noms = dbHelper.getNoms();
         }catch (SQLException ex){
             ex.printStackTrace();
         }

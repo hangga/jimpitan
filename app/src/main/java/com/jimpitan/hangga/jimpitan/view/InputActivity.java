@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -53,32 +54,39 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     private Warga warga;
 
     private int jam, day, year, month;
-    private String hari;
+    private String hari, sJam;
+    private int nominal;
 
     private void initDate() {
+        Calendar c = Calendar.getInstance();
+
         SimpleDateFormat hariIna = new SimpleDateFormat("EEEE");
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         TimeZone tz = TimeZone.getTimeZone("Asia/Jakarta");
-
-        SimpleDateFormat sJamFormat = new SimpleDateFormat("K:mm");
-
-        //String sJam =
-
-
         hariIna.setTimeZone(tz);
 
-        Calendar c = Calendar.getInstance();
+        SimpleDateFormat sJamFormat = new SimpleDateFormat("kk");
+        SimpleDateFormat sJamFormatComplete = new SimpleDateFormat("kk:mm");
 
-        jam = c.get(Calendar.HOUR);
+        sJam = sJamFormatComplete.format(c.getTime());
+        jam = Integer.parseInt(sJamFormat.format(c.getTime()));
         day = c.get(Calendar.DATE);
         year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH + 1);
+        month = c.get(Calendar.MONTH) + 1;
 
-        hari = hariIna.format(day);
-        txtDay.setText(sJamFormat.format(c.getTime())+"\n\n");
-        txtDay.append("Hari : " + hari + "\n");
-        txtDay.append("Tanggal : " + simpleDateFormat.format(c.getTime()) + "\n");
+        String[] daynames = getResources().getStringArray(R.array.hari);
+        int dayname = c.get(Calendar.DAY_OF_WEEK);
 
+        hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
+        txtDay.setText("Dinten "+hari + "\n");
+        txtDay.append("Surya kaping "+simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.append("Tabuh "+sJam + " WIB \n");
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 
     @Override
@@ -151,8 +159,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             txtNama.setText(warga.getName());
         }
 
-        Button mSendButton = (Button) findViewById(R.id.sendBtn);
-        mSendButton.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.fabSend).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptSend();
@@ -163,6 +170,24 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         mProgressView = findViewById(R.id.send_progress);
     }
 
+    private boolean isValidSend() {
+        boolean isValid = true;
+        if (nominal == 0) {
+            isValid = false;
+        }
+        if (jam >= 0 && jam < 5){
+            isValid = true;
+        } else {
+            isValid = false;
+            ShowSnackBar("Saiki ki ki jam piro e ?");
+        }
+
+        return isValid;
+    }
+
+    private void ShowSnackBar(String message){
+        Snackbar.make(findViewById(R.id.send_form), message, Snackbar.LENGTH_SHORT).show();
+    }
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -170,30 +195,39 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
      * errors are presented and no actual login attempt is made.
      */
     private void attemptSend() {
+        if (!isValidSend()) return;
+        try {
+            String sNominal = mNominal.getText().toString().replace(".", "");
+            nominal = Integer.parseInt(sNominal);
 
-        String sNominal = mNominal.getText().toString().replace(".", "");
-        int nominal = Integer.parseInt(sNominal);
+            String generatedUniqueId = String.valueOf(day) + String.valueOf(month)
+                    + String.valueOf(year) + hari;
 
-        mApiInterface.postJimpitan(Utils.SpreedsheetId,
-                "jimpit",
-                hari,
-                String.valueOf(day),
-                String.valueOf(month),
-                String.valueOf(year),
-                String.valueOf(jam),
-                txtNama.getText().toString(),
-                nominal).enqueue(new Callback<PostJimpitan>() {
-            @Override
-            public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
-                finish();
-                //response.message();
-            }
+            mApiInterface.postJimpitan(Utils.SpreedsheetId,
+                    "jimpit",
+                    generatedUniqueId,
+                    hari,
+                    String.valueOf(day),
+                    String.valueOf(month),
+                    String.valueOf(year),
+                    String.valueOf(sJam),
+                    txtNama.getText().toString(),
+                    nominal).enqueue(new Callback<PostJimpitan>() {
+                @Override
+                public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
+                    onBackPressed();
+                    //finish();
+                    //response.message();
+                }
 
-            @Override
-            public void onFailure(Call<PostJimpitan> call, Throwable t) {
+                @Override
+                public void onFailure(Call<PostJimpitan> call, Throwable t) {
 
-            }
-        });
+                }
+            });
+        } catch (Exception e) {
+
+        }
 
     }
 

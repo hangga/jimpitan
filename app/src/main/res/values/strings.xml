@@ -5,6 +5,8 @@
     <string name="title_activity_input">Input Jimpitan</string>
     <string name="save">Simpan</string>
     <string name="nominal">Nominal</string>
+    <string name="nama">nama</string>
+    <string name="namalabel">Ingkang kagungan dalem:</string>
     <string name="kososng">Tidak boleh kosong</string>
     <string name="off">Off</string>
     <string name="on">On</string>
@@ -23,4 +25,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string-array name="hari">
+        <item>Ahad</item>
+        <item>Senin</item>
+        <item>Selasa</item>
+        <item>Rebo</item>
+        <item>Kemis</item>
+        <item>Jemuah</item>
+        <item>Setu</item>
+    </string-array>
 </resources>

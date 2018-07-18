@@ -9,6 +9,7 @@
     <color name="color_orange">#f38a32</color>
     <color name="color_blue">#1479b7</color>
     <color name="divider_grey">#e4e4e5</color>
+    <color name="young_black">#191a1c</color>
 
     <array name="rect_color">
         <item>@color/color_blue</item>

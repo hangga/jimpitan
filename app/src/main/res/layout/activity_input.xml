@@ -30,6 +30,62 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_green"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/txtDay"
+            android:layout_margin="4dp"
+            android:gravity="right"
+            android:textAlignment="gravity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/divider_grey"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="@string/app_name"/>
+
+
+        <TextView
+            android:id="@+id/txtLabel"
+            android:layout_marginTop="24dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/divider_grey"
+            android:textSize="18sp"
+            android:text="@string/namalabel"/>
+
+
+        <TextView
+            android:id="@+id/txtNama"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/young_black"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:text="@string/nama"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_menu_send" />
+
+    </LinearLayout>
+
+
     <ScrollView
         android:id="@+id/send_form"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -45,24 +101,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtDay"
-                android:layout_margin="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_blue"
-                android:textSize="18sp"
-                android:text="@string/app_name"/>
 
-
-            <TextView
-                android:id="@+id/txtNama"
-                android:layout_margin="4dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_blue"
-                android:textSize="18sp"
-                android:text="@string/nominal"/>
 
 
             <!--<android.support.design.widget.TextInputLayout
@@ -98,33 +137,61 @@
 
             </android.support.design.widget.TextInputLayout>
 -->
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/nominal"
-                    android:layout_width="match_parent"
+
+            <com.nex3z.flowlayout.FlowLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:gravity="left"
+                android:layout_gravity="left"
+                android:textAlignment="gravity"
+                app:flChildSpacing="auto"
+                app:flChildSpacingForLastRow="align"
+                app:flRowSpacing="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/nominal"
-                    android:imeActionId="6"
-                    android:imeActionLabel="@string/action_sign_in_short"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    android:text="SUN"/>
 
-            </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MON"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/nominal"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/nominal"
+                        android:imeActionId="6"
+                        android:imeActionLabel="@string/action_sign_in_short"
+                        android:imeOptions="actionUnspecified"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1"
+                        android:singleLine="true" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <!--...-->
+
+            </com.nex3z.flowlayout.FlowLayout>
 
 
-            <Button
+            <!--<Button
                 android:id="@+id/sendBtn"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/save"
-                android:textStyle="bold" />
+                android:textStyle="bold" />-->
 
         </LinearLayout>
     </ScrollView>
