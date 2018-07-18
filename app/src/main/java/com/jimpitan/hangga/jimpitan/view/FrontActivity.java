@@ -34,7 +34,7 @@ public class FrontActivity extends BaseActivity {
 
                 // nah yg ini dummy
                 Intent intent = new Intent(FrontActivity.this, InputActivity.class);
-                intent.putExtra("id", 2);
+                intent.putExtra("id", 1);
                 startActivity(intent);
             }
         });

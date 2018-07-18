@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
+import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 import com.jimpitan.hangga.jimpitan.util.Utils;
 import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
@@ -25,6 +26,7 @@ import com.nex3z.flowlayout.FlowLayout;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -85,6 +87,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     private void initMain() {
         flowRp.removeAllViews();
         //noms = daoImplementation.getNoms();
+        List<Nominal> noms = Nominal.listAll(Nominal.class);
         if (noms != null && noms.size() > 0) {
             for (int i = 0; i < noms.size(); i++) {
 
@@ -234,12 +237,17 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
      * errors are presented and no actual login attempt is made.
      */
     private void attemptSend() {
-        if (!isValidSend()) return;
+        //if (!isValidSend()) return;
         try {
             String sNominal = mNominal.getText().toString().replace(".", "");
             nominal = Integer.parseInt(sNominal);
 
-            String generatedUniqueId = String.valueOf(day) + String.valueOf(month)
+            /*Nominal nom = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).get(0);
+            if (nom == null){
+                new Nominal(String.valueOf(nominal)).save();
+            }*/
+
+            String generatedUniqueId = String.valueOf(id) +String.valueOf(day) + String.valueOf(month)
                     + String.valueOf(year) + hari;
 
             mApiInterface.postJimpitan(Utils.SpreedsheetId,

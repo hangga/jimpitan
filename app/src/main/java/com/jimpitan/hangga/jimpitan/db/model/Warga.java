@@ -1,13 +1,16 @@
 package com.jimpitan.hangga.jimpitan.db.model;
 
 import com.orm.SugarRecord;
+import com.orm.dsl.Table;
 
 /**
  * Created by sayekti on 7/3/18.
  */
-public class Warga extends SugarRecord<Warga> {
 
-    private int id_warga;
+@Table
+public class Warga extends SugarRecord {
+
+    private int idwarga;
     private String name;
 
     public Warga() {
@@ -15,16 +18,16 @@ public class Warga extends SugarRecord<Warga> {
     }
 
     public Warga(int id, String name) {
-        this.id_warga = id;
+        this.idwarga = id;
         this.name = name;
     }
 
     public int getIdWarga() {
-        return id_warga;
+        return idwarga;
     }
 
     public void setIdWarga(int id) {
-        this.id_warga = id;
+        this.idwarga = id;
     }
 
     public String getName() {
