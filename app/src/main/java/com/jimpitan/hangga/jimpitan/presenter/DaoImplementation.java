@@ -5,6 +5,7 @@ import android.content.Context;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.jimpitan.hangga.jimpitan.db.DbHelper;
+import com.jimpitan.hangga.jimpitan.db.model.Nom;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ public class DaoImplementation implements DaoPresenter {
     private Context context;
     private DbHelper dbHelper;
     private Dao<Warga,Integer> wargas;
+    private Dao<Nom,Integer> noms;
 
     public DaoImplementation(Context ctx){
         this.context = ctx;
@@ -34,6 +36,15 @@ public class DaoImplementation implements DaoPresenter {
     public int insert(Warga warga) {
         try {
             return wargas.create(warga);
+        }catch (SQLException ex){
+            return 0;
+        }
+    }
+
+    @Override
+    public int insert(Nom nom) {
+        try {
+            return noms.create(nom);
         }catch (SQLException ex){
             return 0;
         }
@@ -75,6 +86,15 @@ public class DaoImplementation implements DaoPresenter {
     public List<Warga> getWargas() {
         try {
             return wargas.queryForAll();
+        }catch (SQLException ex){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Nom> getNoms() {
+        try {
+            return noms.queryForAll();
         }catch (SQLException ex){
             return null;
         }

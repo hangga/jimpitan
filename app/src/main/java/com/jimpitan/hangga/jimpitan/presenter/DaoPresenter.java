@@ -1,5 +1,6 @@
 package com.jimpitan.hangga.jimpitan.presenter;
 
+import com.jimpitan.hangga.jimpitan.db.model.Nom;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 
 import java.util.List;
@@ -10,8 +11,10 @@ import java.util.List;
 
 public interface DaoPresenter {
     int insert(Warga value);
+    int insert(Nom value);
     int update(Warga value,int id);
     int delete(int id);
     Warga getWarga(int id);
     List<Warga> getWargas();
+    List<Nom> getNoms();
 }

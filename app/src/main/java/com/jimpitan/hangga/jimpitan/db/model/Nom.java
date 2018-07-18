@@ -17,13 +17,21 @@ public class Nom {
     private Integer id;
 
     @DatabaseField(columnName = COLUMN_NAME)
-    private String val;
+    private long val;
 
-    public String getVal() {
+    public Nom(){
+
+    }
+
+    public Nom(long val){
+        this.val = val;
+    }
+
+    public long getVal() {
         return val;
     }
 
-    public void setVal(String val) {
+    public void setVal(long val) {
         this.val = val;
     }
 }

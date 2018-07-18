@@ -11,6 +11,7 @@ import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.ApiClient;
 import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
+import com.jimpitan.hangga.jimpitan.db.model.Nom;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 import com.jimpitan.hangga.jimpitan.presenter.DaoImplementation;
 
@@ -27,6 +28,7 @@ import retrofit2.Response;
 public class BaseActivity extends AppCompatActivity {
     public DaoImplementation daoImplementation;
     public List<Warga> wargas;
+    public List<Nom> noms;
     public ApiInterface mApiInterface;
 
     @Override
@@ -39,6 +41,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void initDummy() {
+        noms = daoImplementation.getNoms();
+        if (noms != null && noms.size() == 0){
+            daoImplementation.insert(new Nom(500));
+            daoImplementation.insert(new Nom(1000));
+            daoImplementation.insert(new Nom(2000));
+        }
+
         wargas = daoImplementation.getWargas();
         if (wargas.size() == 0) {
 
@@ -65,11 +74,11 @@ public class BaseActivity extends AppCompatActivity {
             daoImplementation.insert(new Warga(4, "Maryam"));
             daoImplementation.insert(new Warga(5, "Khadijah"));*/
             Log.d("JIMPITAN", "yaksip...");
-        } else {
+        } /*else {
             for (int i = 0; i < wargas.size(); i++) {
                 Log.d("JIMPITAN", wargas.get(i).getName());
             }
-        }
+        }*/
     }
 
     protected Warga getWarga(int id) {
