@@ -13,7 +13,6 @@ import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
 import com.jimpitan.hangga.jimpitan.db.model.Nom;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
-import com.jimpitan.hangga.jimpitan.presenter.DaoImplementation;
 
 import java.util.List;
 
@@ -26,7 +25,7 @@ import retrofit2.Response;
  */
 
 public class BaseActivity extends AppCompatActivity {
-    public DaoImplementation daoImplementation;
+    //public DaoImplementation daoImplementation;
     public List<Warga> wargas;
     public List<Nom> noms;
     public ApiInterface mApiInterface;
@@ -35,20 +34,20 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        daoImplementation = new DaoImplementation(this);
+        //daoImplementation = new DaoImplementation(this);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         initDummy();
     }
 
     private void initDummy() {
-        noms = daoImplementation.getNoms();
-        if (noms != null && noms.size() == 0){
-            daoImplementation.insert(new Nom(500));
-            daoImplementation.insert(new Nom(1000));
-            daoImplementation.insert(new Nom(2000));
+        noms = Nom.listAll(Nom.class);
+        if (noms != null || noms.size() == 0){
+            new Nom(500).save();
+            new Nom(1000).save();
+            new Nom(2000).save();
         }
 
-        wargas = daoImplementation.getWargas();
+        wargas = Warga.listAll(Warga.class);
         if (wargas.size() == 0) {
 
             Call<Getwarga> getwargaCall = mApiInterface.getWarga();
@@ -56,8 +55,10 @@ public class BaseActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Getwarga> call, Response<Getwarga> response) {
                     List<com.jimpitan.hangga.jimpitan.api.model.Warga> wargaList = response.body().getListDataWarga();
-                    for (int i = 0; i < wargaList.size(); i++){
-                        daoImplementation.insert(new Warga(wargaList.get(i).getId(), wargaList.get(i).getNama()));
+
+
+                    for (int i = 0; i < wargaList.size(); i++) {
+                        new Warga(wargaList.get(i).getId(), wargaList.get(i).getNama()).save();
                     }
                 }
 
@@ -74,18 +75,14 @@ public class BaseActivity extends AppCompatActivity {
             daoImplementation.insert(new Warga(4, "Maryam"));
             daoImplementation.insert(new Warga(5, "Khadijah"));*/
             Log.d("JIMPITAN", "yaksip...");
-        } /*else {
-            for (int i = 0; i < wargas.size(); i++) {
-                Log.d("JIMPITAN", wargas.get(i).getName());
-            }
-        }*/
+        }
     }
 
     protected Warga getWarga(int id) {
-        return daoImplementation.getWarga(id);
+        return null;//daoImplementation.getWarga(id);
     }
 
-    public void initToolBar(){
+    public void initToolBar() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

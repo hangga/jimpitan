@@ -11,14 +11,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 import com.jimpitan.hangga.jimpitan.util.Utils;
+import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
+import com.nex3z.flowlayout.FlowLayout;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -47,7 +49,8 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
 
     private EditText mNominal;
     private View mProgressView;
-    private View mFormView;
+    /*private View mFormView;*/
+    private RelativeLayout activityRoot;
 
     private TextView txtDay, txtNama;
     private int id;
@@ -56,6 +59,50 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
     private int jam, day, year, month;
     private String hari, sJam;
     private int nominal;
+    private FlowLayout flowRp;
+
+    private TextWatcher rpWatcher = new TextWatcher() {
+        private String current = "";
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            rupiahHandler(s, current);
+        }
+    };
+
+
+
+    private void initMain() {
+        flowRp.removeAllViews();
+        //noms = daoImplementation.getNoms();
+        if (noms != null && noms.size() > 0) {
+            for (int i = 0; i < noms.size(); i++) {
+
+                final RpButton rpButton = new RpButton(this, null, R.style.MyButton);
+                rpButton.setVal(noms.get(i).getVal());
+                rpButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mNominal.setText(String.valueOf(rpButton.getVal()));
+                    }
+                });
+                flowRp.addView(rpButton);
+
+            }
+        } else {
+
+        }
+    }
 
     private void initDate() {
         Calendar c = Calendar.getInstance();
@@ -78,9 +125,9 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         int dayname = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
-        txtDay.setText("Dinten "+hari + "\n");
-        txtDay.append("Surya kaping "+simpleDateFormat.format(c.getTime()) + "\n");
-        txtDay.append("Tabuh "+sJam + " WIB \n");
+        txtDay.setText("Dinten " + hari + "\n");
+        txtDay.append("Surya kaping " + simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.append("Tabuh " + sJam + " WIB \n");
 
     }
 
@@ -89,66 +136,57 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         super.onBackPressed();
     }
 
+    private void rupiahHandler(Editable s, String current) {
+        if (!s.toString().equals(current)) {
+            mNominal.removeTextChangedListener(rpWatcher);
+
+            Locale local = new Locale("id", "id");
+            String replaceable = String.format("[Rp,.\\s]",
+                    NumberFormat.getCurrencyInstance().getCurrency()
+                            .getSymbol(local));
+            String cleanString = s.toString().replaceAll(replaceable,
+                    "");
+
+            double parsed;
+            try {
+                parsed = Double.parseDouble(cleanString);
+            } catch (NumberFormatException e) {
+                parsed = 0.00;
+            }
+
+            NumberFormat formatter = NumberFormat
+                    .getCurrencyInstance(local);
+            formatter.setMaximumFractionDigits(0);
+            formatter.setParseIntegerOnly(true);
+            String formatted = formatter.format((parsed));
+
+            String replace = String.format("[Rp\\s]",
+                    NumberFormat.getCurrencyInstance().getCurrency()
+                            .getSymbol(local));
+            String clean = formatted.replaceAll(replace, "");
+
+            current = formatted;
+            mNominal.setText(clean);
+            mNominal.setSelection(clean.length());
+            mNominal.addTextChangedListener(rpWatcher);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_input);
         initToolBar();
-        // Set up the login form.
+
+        activityRoot = (RelativeLayout) findViewById(R.id.activityRoot);
         txtDay = (TextView) findViewById(R.id.txtDay);
-        initDate();
-
         mNominal = (EditText) findViewById(R.id.nominal);
-        mNominal.addTextChangedListener(new TextWatcher() {
-            private String current = "";
+        flowRp = (FlowLayout) findViewById(R.id.flowRp);
 
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        initDate();
+        initMain();
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().equals(current)) {
-                    mNominal.removeTextChangedListener(this);
-
-                    Locale local = new Locale("id", "id");
-                    String replaceable = String.format("[Rp,.\\s]",
-                            NumberFormat.getCurrencyInstance().getCurrency()
-                                    .getSymbol(local));
-                    String cleanString = s.toString().replaceAll(replaceable,
-                            "");
-
-                    double parsed;
-                    try {
-                        parsed = Double.parseDouble(cleanString);
-                    } catch (NumberFormatException e) {
-                        parsed = 0.00;
-                    }
-
-                    NumberFormat formatter = NumberFormat
-                            .getCurrencyInstance(local);
-                    formatter.setMaximumFractionDigits(0);
-                    formatter.setParseIntegerOnly(true);
-                    String formatted = formatter.format((parsed));
-
-                    String replace = String.format("[Rp\\s]",
-                            NumberFormat.getCurrencyInstance().getCurrency()
-                                    .getSymbol(local));
-                    String clean = formatted.replaceAll(replace, "");
-
-                    current = formatted;
-                    mNominal.setText(clean);
-                    mNominal.setSelection(clean.length());
-                    mNominal.addTextChangedListener(this);
-                }
-            }
-        });
+        mNominal.addTextChangedListener(rpWatcher);
 
         txtNama = (TextView) findViewById(R.id.txtNama);
 
@@ -166,16 +204,17 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             }
         });
 
-        mFormView = findViewById(R.id.send_form);
+        //mFormView = findViewById(R.id.send_form);
         mProgressView = findViewById(R.id.send_progress);
     }
+
 
     private boolean isValidSend() {
         boolean isValid = true;
         if (nominal == 0) {
             isValid = false;
         }
-        if (jam >= 0 && jam < 5){
+        if (jam >= 0 && jam < 5) {
             isValid = true;
         } else {
             isValid = false;
@@ -185,8 +224,8 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         return isValid;
     }
 
-    private void ShowSnackBar(String message){
-        Snackbar.make(findViewById(R.id.send_form), message, Snackbar.LENGTH_SHORT).show();
+    private void ShowSnackBar(String message) {
+        Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_SHORT).show();
     }
 
     /**
@@ -242,14 +281,14 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            /*mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
             mFormView.animate().setDuration(shortAnimTime).alpha(
                     show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
                 }
-            });
+            });*/
 
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
@@ -263,7 +302,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            //mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 

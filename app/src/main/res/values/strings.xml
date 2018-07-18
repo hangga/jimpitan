@@ -1,30 +1,15 @@
 <resources>
     <string name="app_name">jimpitan</string>
-    <string name="title_activity_front">FrontActivity</string>
     <string name="how_to">Dekatkan kamera dengan kotak jimpitan, lalu scan kode QR</string>
     <string name="title_activity_input">Input Jimpitan</string>
-    <string name="save">Simpan</string>
-    <string name="nominal">Nominal</string>
+    <string name="nominal">Jumlah lain</string>
     <string name="nama">nama</string>
+    <string name="rp">Rp. </string>
     <string name="namalabel">Ingkang kagungan dalem:</string>
-    <string name="kososng">Tidak boleh kosong</string>
-    <string name="off">Off</string>
-    <string name="on">On</string>
-    <string name="lampu">Lampu</string>
 
     <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
-    <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="error_salah">Salah</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
 
     <string-array name="hari">
         <item>Ahad</item>

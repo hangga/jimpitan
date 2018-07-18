@@ -1,38 +1,30 @@
 package com.jimpitan.hangga.jimpitan.db.model;
 
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
+import com.orm.SugarRecord;
 
 /**
  * Created by sayekti on 7/3/18.
  */
+public class Warga extends SugarRecord<Warga> {
 
-@DatabaseTable(tableName = Warga.TABLE_NAME)
-public class Warga {
-
-    public static final String TABLE_NAME = "warga";
-    public static final String COLUMN_ID = "id";
-    public static final String COLUMN_NAME = "name";
-    @DatabaseField(columnName = COLUMN_ID)
-    private int id;
-    @DatabaseField(columnName = COLUMN_NAME)
+    private int id_warga;
     private String name;
 
-    public Warga(){
+    public Warga() {
 
     }
 
     public Warga(int id, String name) {
-        this.id = id;
+        this.id_warga = id;
         this.name = name;
     }
 
-    public int getId() {
-        return id;
+    public int getIdWarga() {
+        return id_warga;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdWarga(int id) {
+        this.id_warga = id;
     }
 
     public String getName() {
