@@ -26,7 +26,7 @@ public class ScannerActivity extends BaseActivity {
         public void onRetrieved(Barcode barcode) {
             int id = Integer.parseInt(barcode.displayValue);
 
-            Warga warga = Warga.findWithQuery(Warga.class , "Select * from Warga where id_warga = ?", String.valueOf(id)).get(0);
+            Warga warga = Warga.findWithQuery(Warga.class , "Select * from Warga where idwarga = ?", String.valueOf(id)).get(0);
 
             if (warga!= null){
                 Intent intent = new Intent(ScannerActivity.this, InputActivity.class);

@@ -27,15 +27,13 @@ public class FrontActivity extends BaseActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                di blok dulu sementara
+                //di blok dulu sementara
                 startActivity(new Intent(FrontActivity.this, ScannerActivity.class));
-                */
 
                 // nah yg ini dummy
-                Intent intent = new Intent(FrontActivity.this, InputActivity.class);
+                /*Intent intent = new Intent(FrontActivity.this, InputActivity.class);
                 intent.putExtra("id", 1);
-                startActivity(intent);
+                startActivity(intent);*/
             }
         });
     }
