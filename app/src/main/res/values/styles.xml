@@ -22,4 +22,9 @@
         <item name="colorButtonNormal">@color/color_blue</item>
     </style>
 
+    <style name="LinearProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorAccent</item><!--
+        <item name="progressBackgroundTint">@color/color_orange</item>-->
+    </style>
+
 </resources>

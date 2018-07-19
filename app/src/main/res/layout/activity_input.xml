@@ -86,23 +86,7 @@
 
             </LinearLayout>
 
-            <com.nex3z.flowlayout.FlowLayout
-                android:id="@+id/flowRp"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
 
-                app:flChildSpacing="auto"
-                app:flChildSpacingForLastRow="auto"
-                app:flRowSpacing="8dp">
-
-
-
-
-
-                <!--...-->
-
-            </com.nex3z.flowlayout.FlowLayout>
 
 
         </LinearLayout>
@@ -152,13 +136,31 @@
             android:layout_marginRight="@dimen/fab_margin"
             app:srcCompat="@android:drawable/ic_menu_send" />
 
+        <com.nex3z.flowlayout.FlowLayout
+            android:id="@+id/flowRp"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/inputNominal"
+            app:flChildSpacing="auto"
+            app:flChildSpacingForLastRow="auto"
+            app:flRowSpacing="8dp">
+
+
+
+
+
+            <!--...-->
+
+        </com.nex3z.flowlayout.FlowLayout>
     </RelativeLayout>
     <ProgressBar
         android:id="@+id/send_progress"
         android:layout_alignParentBottom="true"
-        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        style="@style/LinearProgress"
         android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:indeterminate="true"
         android:visibility="gone" />
 </RelativeLayout>

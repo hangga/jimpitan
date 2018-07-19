@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -93,6 +94,9 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             for (int i = 0; i < noms.size(); i++) {
 
                 final RpButton rpButton = new RpButton(this, null, R.style.MyButton);
+                rpButton.setTextColor(ContextCompat.getColor(this, R.color.putih));
+                rpButton.setBackgroundResource(R.drawable.selector_btn_nominal);
+                rpButton.setPadding(10, 10, 10, 10);
                 rpButton.setVal(noms.get(i).getVal());
                 rpButton.setOnClickListener(new OnClickListener() {
                     @Override
@@ -244,10 +248,10 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             String sNominal = mNominal.getText().toString().replace(".", "");
             nominal = Integer.parseInt(sNominal);
 
-            /*Nominal nom = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).get(0);
+            Nominal nom = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).get(0);
             if (nom == null){
                 new Nominal(String.valueOf(nominal)).save();
-            }*/
+            }
 
             String generatedUniqueId = String.valueOf(id) +String.valueOf(day) + String.valueOf(month)
                     + String.valueOf(year) + hari;
@@ -292,15 +296,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            /*mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });*/
-
+            findViewById(R.id.relEditor).setVisibility(show ? View.GONE : View.VISIBLE);
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mProgressView.animate().setDuration(shortAnimTime).alpha(
                     show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
@@ -310,10 +306,8 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
+            findViewById(R.id.relEditor).setVisibility(show ? View.GONE : View.VISIBLE);
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            //mFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
     }
 
