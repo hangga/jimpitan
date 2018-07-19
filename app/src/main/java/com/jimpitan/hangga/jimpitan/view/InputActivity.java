@@ -268,14 +268,14 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
                     nominal).enqueue(new Callback<PostJimpitan>() {
                 @Override
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
-                    showProgress(false);
+                    //showProgress(false);
                     onBackPressed();
                     Log.d("JIMPITAN-DAB", response.message());
                 }
 
                 @Override
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
-                    showProgress(false);
+                    //showProgress(false);
                     Log.d("JIMPITAN-DAB", t.getMessage());
                 }
             });
