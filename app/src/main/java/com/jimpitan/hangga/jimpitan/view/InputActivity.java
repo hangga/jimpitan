@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -238,6 +239,7 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
      */
     private void attemptSend() {
         //if (!isValidSend()) return;
+        showProgress(true);
         try {
             String sNominal = mNominal.getText().toString().replace(".", "");
             nominal = Integer.parseInt(sNominal);
@@ -250,8 +252,8 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             String generatedUniqueId = String.valueOf(id) +String.valueOf(day) + String.valueOf(month)
                     + String.valueOf(year) + hari;
 
-            mApiInterface.postJimpitan(Utils.SpreedsheetId,
-                    "jimpit",
+            //Log.d("JIMPITAN", generatedUniqueId);
+            mApiInterface.postJimpitan(
                     generatedUniqueId,
                     hari,
                     String.valueOf(day),
@@ -262,18 +264,19 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
                     nominal).enqueue(new Callback<PostJimpitan>() {
                 @Override
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
+                    showProgress(false);
                     onBackPressed();
-                    //finish();
-                    //response.message();
+                    Log.d("JIMPITAN-DAB", response.message());
                 }
 
                 @Override
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
-
+                    showProgress(false);
+                    Log.d("JIMPITAN-DAB", t.getMessage());
                 }
             });
         } catch (Exception e) {
-
+            showProgress(false);
         }
 
     }

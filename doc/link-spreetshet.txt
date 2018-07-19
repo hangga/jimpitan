@@ -17,3 +17,9 @@ https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsH
 atau
 
 https://script.googleusercontent.com/macros/echo?user_content_key=-3oa62MR0KsRoBsu0w5E6rQBJ0T4xt6mI2Hn5lkrw1a8_mOFnadRXFbMNUf8a6qf_Kqs_k2CK5j2obPoYeSOUjqI1VQbFgn7OJmA1Yb3SEsKFZqtv3DaNYcMrmhZHmUMWojr9NvTBuBLhyHCd5hHa3rGbbC4Xqw1vW7vGKX7thxWx819y6NHtYjtoGDOkxelUg1H58VBwKrJAzvSbOCvPoJj-KLuzndSx0cuVxt7MUDHKxzHyuSphcvmGMkYLvqLve0OwB-BIQ7K1X8Fl0eef5KFt2as-0-PGetL3GQdFGsic-sh0Ed9wA&lib=MtT8W3ZcddabhB9VJr109MecGKYnEG-0-
+
+
+3. Data Warga Filtered
+
+https://script.google.com/macros/s/AKfycbxXHfRAEu836Js9CO5fDhpMOU-cv5VfsTapWmuvNjPhni-b3uo/exec?nama=Wahyu Jamaludin
+
