@@ -96,7 +96,8 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
                 final RpButton rpButton = new RpButton(this, null, R.style.MyButton);
                 rpButton.setTextColor(ContextCompat.getColor(this, R.color.putih));
                 rpButton.setBackgroundResource(R.drawable.selector_btn_nominal);
-                rpButton.setPadding(10, 10, 10, 10);
+                rpButton.setPadding(18, 6, 18, 6);
+                rpButton.setTextSize(18);
                 rpButton.setVal(noms.get(i).getVal());
                 rpButton.setOnClickListener(new OnClickListener() {
                     @Override
@@ -248,10 +249,6 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
             String sNominal = mNominal.getText().toString().replace(".", "");
             nominal = Integer.parseInt(sNominal);
 
-            Nominal nom = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).get(0);
-            if (nom == null){
-                new Nominal(String.valueOf(nominal)).save();
-            }
 
             String generatedUniqueId = String.valueOf(id) +String.valueOf(day) + String.valueOf(month)
                     + String.valueOf(year) + hari;
@@ -269,14 +266,18 @@ public class InputActivity extends BaseActivity /*implements LoaderCallbacks<Cur
                 @Override
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
                     //showProgress(false);
+                    try {
+                        long size = Nominal.find(Nominal.class, "val = ?",String.valueOf(nominal)).size();
+                        if (size < 1) {
+                            new Nominal(String.valueOf(nominal)).save();
+                        }
+                    }catch (Exception e){}
                     onBackPressed();
-                    Log.d("JIMPITAN-DAB", response.message());
                 }
 
                 @Override
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
                     //showProgress(false);
-                    Log.d("JIMPITAN-DAB", t.getMessage());
                 }
             });
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.jimpitan.hangga.jimpitan.db.model;
 
 import com.orm.SugarRecord;
 import com.orm.dsl.Table;
+import com.orm.dsl.Unique;
 
 /**
  * Created by sayekti on 7/18/18.
@@ -9,6 +10,8 @@ import com.orm.dsl.Table;
 
 @Table
 public class Nominal extends SugarRecord {
+
+    @Unique
     private String val;
 
     public Nominal() {
