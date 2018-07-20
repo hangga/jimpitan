@@ -185,7 +185,8 @@ public class FrontActivity extends BaseActivity {
 
     private void attemptSend() {
         //if (!isValidSend()) return;
-        send_progress.setVisibility(View.GONE);
+        btnSubmit.setVisibility(View.GONE);
+        send_progress.setVisibility(View.VISIBLE);
         try {
             String sNominal = edtNominal.getText().toString().replace(".", "");
             nominal = Integer.parseInt(sNominal);
@@ -208,6 +209,8 @@ public class FrontActivity extends BaseActivity {
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
                     //showProgress(false);
                     OnDataSend();
+                    btnSubmit.setVisibility(View.VISIBLE);
+                    send_progress.setVisibility(View.GONE);
                 }
 
                 @Override
@@ -216,6 +219,7 @@ public class FrontActivity extends BaseActivity {
                 }
             });
         } catch (Exception e) {
+            btnSubmit.setVisibility(View.VISIBLE);
             send_progress.setVisibility(View.GONE);
         }
 
