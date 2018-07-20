@@ -129,7 +129,7 @@ public class FrontActivity extends BaseActivity {
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         swtcFlash = (Switch) findViewById(R.id.swtcFlash);
         qrCamera = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
-        //initCamera();
+        layData.setVisibility(View.GONE);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -294,17 +294,13 @@ public class FrontActivity extends BaseActivity {
     private void OnDataFound(String id) {
         layData.setVisibility(View.VISIBLE);
         btnScanner.setVisibility(View.GONE);
-        //Warga warga = Warga.findWithQuery(Warga.class, "Select * from Warga where idwarga = ?", id).get(0);
 
         Warga warga = Warga.find(Warga.class, "idwarga = ?", id).get(0);
 
         if (warga != null) {
-            Log.d("JIMPITAN-KETEMU", warga.getName());
             txtNama.setText(warga.getName());
             initDate();
-            Log.d("JIMPITAN-KETEMU-yak", warga.getName());
         } else {
-            Log.d("JIMPITAN-ORA-KETEMU", warga.getName());
             Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
         }
         qrCamera.stopScanning();
@@ -345,8 +341,8 @@ public class FrontActivity extends BaseActivity {
         int dayname = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
-        txtDay.setText(hari + "\n");
-        txtDay.append("Tanggal, " + simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.setText("Dinten "+hari + "\n");
+        txtDay.append("Surya kaping, " + simpleDateFormat.format(c.getTime()) + "\n");
         txtDay.append("Tabuh " + sJam + " WIB \n");
 
     }

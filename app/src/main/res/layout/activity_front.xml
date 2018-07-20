@@ -83,9 +83,9 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/inputNominal"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:padding="6dp"
+            android:padding="32dp"
             android:layout_centerHorizontal="true"
-            android:scaleType="centerInside"
+            android:scaleType="fitCenter"
             android:background="@drawable/selector_btn_scanner"
             android:src="@drawable/ic_scan"
             android:visibility="visible"/>
@@ -105,7 +105,7 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="gone">
             <TextView
                 android:id="@+id/txtDay"
                 android:layout_margin="4dp"

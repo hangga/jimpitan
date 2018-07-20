@@ -1,9 +1,14 @@
 package com.jimpitan.hangga.jimpitan.view;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
 
@@ -36,6 +41,20 @@ public class BaseActivity extends AppCompatActivity {
         //daoImplementation = new DaoImplementation(this);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         initDummy();
+        syncData();
+        TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Log.d("JIMPITAN-NOMERKU", tMgr.getLine1Number().toString());
+        //String mPhoneNumber = tMgr.getLine1Number();
     }
 
     private void initDummy() {
@@ -44,40 +63,34 @@ public class BaseActivity extends AppCompatActivity {
         if (c < 1){
             new Nominal("500").save();
             new Nominal("1000").save();
+            new Nominal("1500").save();
             new Nominal("2000").save();
+            new Nominal("5000").save();
         }
-        /*List<Nominal> noms = Nominal.listAll(Nominal.class);
-
-        if (noms != null || noms.size() == 0) {
-            new Nominal("500").save();
-            new Nominal("1000").save();
-            new Nominal("2000").save();
-        }*/
-
-        List<Warga> wargas = Warga.listAll(Warga.class);
-
-        long cWarga = Warga.count(Warga.class, null, null);
-
-        if (cWarga < 1) {
-
-            Call<Getwarga> getwargaCall = mApiInterface.getWarga();
-            getwargaCall.enqueue(new Callback<Getwarga>() {
-                @Override
-                public void onResponse(Call<Getwarga> call, Response<Getwarga> response) {
-                    List<com.jimpitan.hangga.jimpitan.api.model.Warga> wargaList = response.body().getListDataWarga();
 
 
-                    for (int i = 0; i < wargaList.size(); i++) {
+    }
+
+    public void syncData(){
+        Call<Getwarga> getwargaCall = mApiInterface.getWarga();
+        getwargaCall.enqueue(new Callback<Getwarga>() {
+            @Override
+            public void onResponse(Call<Getwarga> call, Response<Getwarga> response) {
+                List<com.jimpitan.hangga.jimpitan.api.model.Warga> wargaList = response.body().getListDataWarga();
+
+
+                for (int i = 0; i < wargaList.size(); i++) {
+                    if (Warga.find(Warga.class, "idwarga = ?",
+                            String.valueOf(wargaList.get(i).getId())).get(0) == null)
                         new Warga(wargaList.get(i).getId(), wargaList.get(i).getNama()).save();
-                    }
                 }
+            }
 
-                @Override
-                public void onFailure(Call<Getwarga> call, Throwable t) {
+            @Override
+            public void onFailure(Call<Getwarga> call, Throwable t) {
 
-                }
-            });
-        }
+            }
+        });
     }
 
     protected Warga getWarga(int id) {
