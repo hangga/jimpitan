@@ -18,6 +18,7 @@ import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
+import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
 import java.util.List;
 
@@ -41,7 +42,12 @@ public class BaseActivity extends AppCompatActivity {
         //daoImplementation = new DaoImplementation(this);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         initDummy();
-        syncData();
+        syncData(new OnFinishListener() {
+            @Override
+            public void OnFinish() {
+                //
+            }
+        });
         TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -71,7 +77,7 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public void syncData(){
+    public void syncData(final OnFinishListener finishListener){
         Call<Getwarga> getwargaCall = mApiInterface.getWarga();
         getwargaCall.enqueue(new Callback<Getwarga>() {
             @Override
@@ -86,6 +92,7 @@ public class BaseActivity extends AppCompatActivity {
                     if (Warga.find(Warga.class, "idwarga = ?", sid).size() == 0)
                         new Warga(wargaList.get(i).getId(), wargaList.get(i).getNama()).save();
                 }
+                finishListener.OnFinish();
             }
 
             @Override

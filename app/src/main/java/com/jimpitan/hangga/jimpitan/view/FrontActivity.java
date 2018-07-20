@@ -29,6 +29,7 @@ import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
+import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -325,20 +326,27 @@ public class FrontActivity extends BaseActivity {
         });
     }
 
-    private void OnDataFound(String id) {
+    private void OnDataFound(final String sid) {
+        id = Integer.parseInt(sid);
         layData.setVisibility(View.VISIBLE);
         btnScanner.setVisibility(View.GONE);
 
-        List<Warga> warga = Warga.find(Warga.class, "idwarga = ?", id);
+        List<Warga> warga = Warga.find(Warga.class, "idwarga = ?", sid);
 
         if (warga.size() > 0) {
             txtNama.setText(warga.get(0).getName());
             initDate();
+            btnSubmit.setEnabled(true);
         } else {
-            Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
+            send_progress.setVisibility(View.INVISIBLE);
+            syncData(new OnFinishListener() {
+                @Override
+                public void OnFinish() {
+                    OnDataFound(sid);
+                    send_progress.setVisibility(View.GONE);
+                }
+            });
         }
-        //qrCamera.stopScanning();
-        btnSubmit.setEnabled(true);
     }
 
     private void OnDataSend() {
