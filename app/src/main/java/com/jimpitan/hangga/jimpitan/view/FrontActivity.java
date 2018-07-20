@@ -3,6 +3,7 @@ package com.jimpitan.hangga.jimpitan.view;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -42,7 +43,6 @@ import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 
 public class FrontActivity extends BaseActivity {
 
-    static final int PICK_DATA = 121;
     public ApiInterface mApiInterface;
     private ProgressBar send_progress;
     private LinearLayout layData;
@@ -50,6 +50,7 @@ public class FrontActivity extends BaseActivity {
     private TextInputLayout inputNominal;
     private EditText edtNominal;
     private HorizontalScrollView flowRp;
+    private LinearLayout layRp;
     private Button btnSubmit;
     private Switch swtcFlash;
     private TextView txtDay, txtNama;
@@ -57,59 +58,7 @@ public class FrontActivity extends BaseActivity {
     private String hari, sJam;
     private int nominal;
     private BarcodeCapture qrCamera;
-    private int id;
-    private TextWatcher rpWatcher = new TextWatcher() {
-        private String current = "";
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            rupiahHandler(s, current);
-        }
-    };
-    private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
-        @Override
-        public void onRetrieved(final Barcode barcode) {
-            Log.d("JIMPITAN-KETEMU", barcode.displayValue);
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    OnDataFound(barcode.displayValue);
-                }
-            });
-
-            //qrCamera.stopScanning();
-        }
-
-        @Override
-        public void onRetrievedMultiple(Barcode closetToClick, List<BarcodeGraphic> barcode) {
-
-        }
-
-        @Override
-        public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
-
-        }
-
-        @Override
-        public void onRetrievedFailed(String reason) {
-
-        }
-
-        @Override
-        public void onPermissionRequestDenied() {
-
-        }
-    };
+    private int id = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,11 +75,15 @@ public class FrontActivity extends BaseActivity {
         edtNominal = (EditText) findViewById(R.id.edtNominal);
         edtNominal.addTextChangedListener(rpWatcher);
         flowRp = (HorizontalScrollView) findViewById(R.id.flowRp);
+        layRp = (LinearLayout) findViewById(R.id.layRp);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         swtcFlash = (Switch) findViewById(R.id.swtcFlash);
         qrCamera = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
         layData.setVisibility(View.GONE);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+        initMain();
+
         swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -163,6 +116,57 @@ public class FrontActivity extends BaseActivity {
             }
         });
     }
+
+    private TextWatcher rpWatcher = new TextWatcher() {
+        private String current = "";
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            rupiahHandler(s, current);
+        }
+    };
+
+    private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
+        @Override
+        public void onRetrieved(final Barcode barcode) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    OnDataFound(barcode.displayValue);
+                }
+            });
+        }
+
+        @Override
+        public void onRetrievedMultiple(Barcode closetToClick, List<BarcodeGraphic> barcode) {
+
+        }
+
+        @Override
+        public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+
+        }
+
+        @Override
+        public void onRetrievedFailed(String reason) {
+
+        }
+
+        @Override
+        public void onPermissionRequestDenied() {
+
+        }
+    };
 
     private void ShowSnackBar(String message) {
         Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_SHORT).show();
@@ -207,7 +211,6 @@ public class FrontActivity extends BaseActivity {
                     nominal).enqueue(new Callback<PostJimpitan>() {
                 @Override
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
-                    //showProgress(false);
                     OnDataSend();
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
@@ -215,7 +218,9 @@ public class FrontActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
-                    //showProgress(false);
+
+                    btnSubmit.setVisibility(View.VISIBLE);
+                    send_progress.setVisibility(View.GONE);
                 }
             });
         } catch (Exception e) {
@@ -266,6 +271,19 @@ public class FrontActivity extends BaseActivity {
         qrCamera.stopScanning();
     }*/
 
+    private void initMain(){
+        layRp.removeAllViews();
+        List<Nominal> noms = Nominal.listAll(Nominal.class);
+        for (int i = 0; i < noms.size(); i++){
+            Button btn = new Button(FrontActivity.this);
+            btn.setText(noms.get(i).getVal());
+            btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
+            btn.setBackgroundResource(R.drawable.selector_btn_nominal);
+            btn.setPadding(20,10,20,10);
+            layRp.addView(btn);
+        }
+    }
+
     private void startScan() {
         initCamera();
         btnScanner.setVisibility(View.GONE);
@@ -295,16 +313,15 @@ public class FrontActivity extends BaseActivity {
         layData.setVisibility(View.VISIBLE);
         btnScanner.setVisibility(View.GONE);
 
-        Warga warga = Warga.find(Warga.class, "idwarga = ?", id).get(0);
+        List<Warga> warga = Warga.find(Warga.class, "idwarga = ?", id);
 
-        if (warga != null) {
-            txtNama.setText(warga.getName());
+        if (warga.size() > 0) {
+            txtNama.setText(warga.get(0).getName());
             initDate();
         } else {
             Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
         }
         qrCamera.stopScanning();
-        // qrCamera.
     }
 
     private void OnDataSend() {
@@ -318,6 +335,7 @@ public class FrontActivity extends BaseActivity {
         } catch (Exception e) {
         }
         btnScanner.setVisibility(View.VISIBLE);
+        ShowSnackBar("Sukses mengambil jimpitan "+txtNama.getText()+" sebesar "+edtNominal.getText());
     }
 
     private void initDate() {

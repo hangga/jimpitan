@@ -78,10 +78,12 @@ public class BaseActivity extends AppCompatActivity {
             public void onResponse(Call<Getwarga> call, Response<Getwarga> response) {
                 List<com.jimpitan.hangga.jimpitan.api.model.Warga> wargaList = response.body().getListDataWarga();
 
+                if (wargaList.size() == 0) return;
 
                 for (int i = 0; i < wargaList.size(); i++) {
-                    if (Warga.find(Warga.class, "idwarga = ?",
-                            String.valueOf(wargaList.get(i).getId())).get(0) == null)
+                    String sid = String.valueOf(wargaList.get(i).getId());
+
+                    if (Warga.find(Warga.class, "idwarga = ?", sid).size() == 0)
                         new Warga(wargaList.get(i).getId(), wargaList.get(i).getNama()).save();
                 }
             }
