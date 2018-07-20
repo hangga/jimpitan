@@ -308,7 +308,7 @@ public class FrontActivity extends BaseActivity {
             Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
         }
         qrCamera.stopScanning();
-       // qrCamera.
+        // qrCamera.
     }
 
     private void OnDataSend() {
@@ -328,7 +328,7 @@ public class FrontActivity extends BaseActivity {
         Calendar c = Calendar.getInstance();
 
         SimpleDateFormat hariIna = new SimpleDateFormat("EEEE");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
         TimeZone tz = TimeZone.getTimeZone("Asia/Jakarta");
         hariIna.setTimeZone(tz);
 
@@ -345,8 +345,8 @@ public class FrontActivity extends BaseActivity {
         int dayname = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
-        txtDay.setText("Dinten " + hari + "\n");
-        txtDay.append("Surya kaping " + simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.setText(hari + "\n");
+        txtDay.append("Tanggal, " + simpleDateFormat.format(c.getTime()) + "\n");
         txtDay.append("Tabuh " + sJam + " WIB \n");
 
     }

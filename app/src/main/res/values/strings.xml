@@ -7,7 +7,7 @@
     <string name="submit">Kirim</string>
     <string name="lampu">Lampu </string>
     <string name="rp">Rp. </string>
-    <string name="namalabel">Ingkang kagungan dalem:</string>
+    <string name="namalabel">Nama KK:</string>
 
     <!-- Strings related to login -->
     <string name="action_sign_in_short">Sign in</string>
