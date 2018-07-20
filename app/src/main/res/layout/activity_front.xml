@@ -146,7 +146,6 @@
 
         </LinearLayout>
 
-
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputNominal"
             android:layout_width="200dp"
@@ -161,6 +160,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nominal"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="18sp"
                 android:imeActionId="6"
                 android:imeActionLabel="@string/action_sign_in_short"
                 android:imeOptions="actionUnspecified"
@@ -213,17 +215,5 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <!--
-
-    <include layout="@layout/content_front" />
--->
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_menu_camera" />-->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -38,7 +38,6 @@ public class RpButton extends AppCompatButton {
 
     public void setVal(String val) {
         this.val = Long.parseLong(val.replace(".", ""));
-        this.setText(String.valueOf(val));
     }
 
     private void init(Context context) {

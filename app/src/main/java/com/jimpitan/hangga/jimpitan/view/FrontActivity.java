@@ -190,7 +190,7 @@ public class FrontActivity extends BaseActivity {
 
     private void attemptSend() {
         //if (!isValidSend()) return;
-        btnSubmit.setVisibility(View.GONE);
+        btnSubmit.setVisibility(View.INVISIBLE);
         send_progress.setVisibility(View.VISIBLE);
         try {
             String sNominal = edtNominal.getText().toString().replace(".", "");
@@ -285,9 +285,10 @@ public class FrontActivity extends BaseActivity {
             RpButton btn = new RpButton(FrontActivity.this);
             btn.setText("Rp."+noms.get(i).getVal());
             btn.setVal(noms.get(i).getVal());
+            btn.setTextSize(20);
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
             btn.setBackgroundResource(R.drawable.selector_btn_nominal);
-            btn.setPadding(20,8,20,8);
+            btn.setPadding(20,9,20,9);
             btn.setLayoutParams(params);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -336,7 +337,7 @@ public class FrontActivity extends BaseActivity {
         } else {
             Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
         }
-        qrCamera.stopScanning();
+        //qrCamera.stopScanning();
         btnSubmit.setEnabled(true);
     }
 
@@ -353,6 +354,7 @@ public class FrontActivity extends BaseActivity {
         btnScanner.setVisibility(View.VISIBLE);
         ShowSnackBar("Sukses mengambil jimpitan "+txtNama.getText()+" sebesar "+edtNominal.getText());
         btnSubmit.setEnabled(false);
+        initCamera();
     }
 
     private void initDate() {
