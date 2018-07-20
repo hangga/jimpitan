@@ -96,7 +96,7 @@
             android:layout_above="@+id/flowRp">
 
             <EditText
-                android:id="@+id/nominal"
+                android:id="@+id/edtNominal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nominal"
