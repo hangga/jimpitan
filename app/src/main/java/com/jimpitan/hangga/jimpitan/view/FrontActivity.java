@@ -23,7 +23,7 @@ public class FrontActivity extends BaseActivity {
 
         //progressbar = (ProgressBar) findViewById(R.id.progressbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,11 +31,11 @@ public class FrontActivity extends BaseActivity {
                 startActivity(new Intent(FrontActivity.this, ScannerActivity.class));
 
                 // nah yg ini dummy
-                /*Intent intent = new Intent(FrontActivity.this, InputActivity.class);
+                *//*Intent intent = new Intent(FrontActivity.this, InputActivity.class);
                 intent.putExtra("id", 1);
-                startActivity(intent);*/
+                startActivity(intent);*//*
             }
-        });
+        });*/
     }
 
 }

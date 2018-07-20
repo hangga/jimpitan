@@ -2,8 +2,9 @@
     <string name="app_name">jimpitan</string>
     <string name="how_to">Dekatkan kamera dengan kotak jimpitan, lalu scan kode QR</string>
     <string name="title_activity_input">Input Jimpitan</string>
-    <string name="nominal">Jumlah lain</string>
+    <string name="nominal">Jumlah</string>
     <string name="nama">nama</string>
+    <string name="submit">Kirim</string>
     <string name="rp">Rp. </string>
     <string name="namalabel">Ingkang kagungan dalem:</string>
 
