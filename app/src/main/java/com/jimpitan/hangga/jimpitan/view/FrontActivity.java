@@ -16,6 +16,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -47,7 +48,7 @@ public class FrontActivity extends BaseActivity {
 
     public ApiInterface mApiInterface;
     private ProgressBar send_progress;
-    private LinearLayout layData;
+    private RelativeLayout layData;
     private ImageButton btnScanner;
     private TextInputLayout inputNominal;
     private EditText edtNominal;
@@ -71,7 +72,7 @@ public class FrontActivity extends BaseActivity {
         txtDay = (TextView) findViewById(R.id.txtDay);
         txtNama = (TextView) findViewById(R.id.txtNama);
         send_progress = (ProgressBar) findViewById(R.id.send_progress);
-        layData = (LinearLayout) findViewById(R.id.layData);
+        layData = (RelativeLayout) findViewById(R.id.layData);
         btnScanner = (ImageButton) findViewById(R.id.btnScanner);
         inputNominal = (TextInputLayout) findViewById(R.id.inputNominal);
         edtNominal = (EditText) findViewById(R.id.edtNominal);
@@ -274,22 +275,23 @@ public class FrontActivity extends BaseActivity {
     }*/
 
     private void initMain(){
+        send_progress.setVisibility(View.GONE);
         btnSubmit.setEnabled(false);
         layRp.removeAllViews();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.leftMargin = 10;
+        params.leftMargin = 12;
         List<Nominal> noms = Nominal.listAll(Nominal.class);
         for (int i = 0; i < noms.size(); i++){
             RpButton btn = new RpButton(FrontActivity.this);
             btn.setText("Rp."+noms.get(i).getVal());
             btn.setVal(noms.get(i).getVal());
-            btn.setTextSize(20);
+            btn.setTextSize(19);
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
             btn.setBackgroundResource(R.drawable.selector_btn_nominal);
-            btn.setPadding(20,9,20,9);
+            btn.setPadding(22,12,22,12);
             btn.setLayoutParams(params);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -386,9 +388,9 @@ public class FrontActivity extends BaseActivity {
         int dayname = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
-        txtDay.setText("Dinten " + hari + "\n");
-        txtDay.append("Surya kaping, " + simpleDateFormat.format(c.getTime()) + "\n");
-        txtDay.append("Tabuh " + sJam + " WIB \n");
+        txtDay.setText("Diambil pada hari, " + hari + "\n");
+        txtDay.append("Tanggal, " + simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.append("Pukul " + sJam + " WIB \n");
 
     }
 }

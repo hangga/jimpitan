@@ -3,16 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="jambonmuda">#ff93e2</color>
 
     <color name="color_green">#14808d</color>
     <color name="color_green_seger">#3aaa27</color>
     <color name="color_brown">#343838</color>
     <color name="color_orange">#f38a32</color>
+    <color name="color_orange_muda">#fffdbf</color>
     <color name="color_blue">#1479b7</color>
     <color name="divider_grey">#e4e4e5</color>
-    <color name="putih">#ffffff</color>
-    <color name="yellow_nganu">#f3ff16</color>
+    <color name="putih">#fcfcfc</color>
 
     <array name="rect_color">
         <item>@color/color_blue</item>
