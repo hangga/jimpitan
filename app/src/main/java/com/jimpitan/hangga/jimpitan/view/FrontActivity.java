@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -23,7 +24,7 @@ public class FrontActivity extends BaseActivity {
 
     private ProgressBar send_progress;
     private LinearLayout layData;
-    private ImageView btnScanner;
+    private ImageButton btnScanner;
     private TextInputLayout inputNominal;
     private EditText edtNominal;
     private FlowLayout flowRp;
@@ -37,7 +38,7 @@ public class FrontActivity extends BaseActivity {
 
         send_progress = (ProgressBar) findViewById(R.id.send_progress);
         layData = (LinearLayout) findViewById(R.id.layData);
-        btnScanner = (ImageView) findViewById(R.id.btnScanner);
+        btnScanner = (ImageButton) findViewById(R.id.btnScanner);
         inputNominal = (TextInputLayout) findViewById(R.id.inputNominal);
         edtNominal = (EditText) findViewById(R.id.edtNominal);
         flowRp = (FlowLayout) findViewById(R.id.flowRp);

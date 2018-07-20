@@ -75,7 +75,7 @@
 
         </LinearLayout>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btnScanner"
             android:layout_width="200dp"
             android:layout_height="200dp"
@@ -83,9 +83,11 @@
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_centerHorizontal="true"
             android:scaleType="centerInside"
-            android:background="@drawable/selector_btn_scanner"
+            android:backgroundTint="@color/color_orange"
+            android:backgroundTintMode="multiply"
+            android:background="@color/color_green_seger"
             android:src="@drawable/ic_scan"
-            android:visibility="gone"/>
+            android:visibility="visible"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputNominal"
