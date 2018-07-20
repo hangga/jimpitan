@@ -118,6 +118,12 @@ public class FrontActivity extends BaseActivity {
                 attemptSend();
             }
         });
+        findViewById(R.id.imgClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnScanner.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private TextWatcher rpWatcher = new TextWatcher() {
@@ -176,25 +182,13 @@ public class FrontActivity extends BaseActivity {
     }
 
     private boolean isValidSend() {
-        boolean isValid = true;
-        /*if (nominal == 0) {
-            isValid = false;
-        }*/
-        Log.d("JAM-mubeng", String.valueOf(mubeng));
-        Log.d("JAM-mulih", String.valueOf(mulih));
-        Log.d("JAM-", String.valueOf(jam));
+        boolean isValid;
         if (jam >= mubeng && jam < mulih) {
             isValid = true;
-            Log.d("JAM-", "Valid");
         } else {
             isValid = false;
             ShowSnackBar("Saiki ki ki jam piro e ?");
         }
-        /*if (edtNominal.getText().toString().trim().isEmpty()){
-            isValid = false;
-            inputNominal.setError("Tidak boleh kosong !");
-        }*/
-
         return isValid;
     }
 
