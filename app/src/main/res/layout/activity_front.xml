@@ -183,6 +183,8 @@
             <LinearLayout
                 android:id="@+id/layRp"
                 android:orientation="horizontal"
+                android:dividerPadding="6dp"
+                android:showDividers="middle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             </LinearLayout>

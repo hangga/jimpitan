@@ -28,6 +28,7 @@ import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
+import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -272,14 +273,28 @@ public class FrontActivity extends BaseActivity {
     }*/
 
     private void initMain(){
+        btnSubmit.setEnabled(false);
         layRp.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.leftMargin = 10;
         List<Nominal> noms = Nominal.listAll(Nominal.class);
         for (int i = 0; i < noms.size(); i++){
-            Button btn = new Button(FrontActivity.this);
-            btn.setText(noms.get(i).getVal());
+            RpButton btn = new RpButton(FrontActivity.this);
+            btn.setText("Rp."+noms.get(i).getVal());
+            btn.setVal(noms.get(i).getVal());
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
             btn.setBackgroundResource(R.drawable.selector_btn_nominal);
-            btn.setPadding(20,10,20,10);
+            btn.setPadding(20,8,20,8);
+            btn.setLayoutParams(params);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    edtNominal.setText(String.valueOf(((RpButton)view).getVal()));
+                }
+            });
             layRp.addView(btn);
         }
     }
@@ -322,6 +337,7 @@ public class FrontActivity extends BaseActivity {
             Snackbar.make(findViewById(R.id.relTop), "Omahe sopoe iki?", Snackbar.LENGTH_SHORT).show();
         }
         qrCamera.stopScanning();
+        btnSubmit.setEnabled(true);
     }
 
     private void OnDataSend() {
@@ -336,6 +352,7 @@ public class FrontActivity extends BaseActivity {
         }
         btnScanner.setVisibility(View.VISIBLE);
         ShowSnackBar("Sukses mengambil jimpitan "+txtNama.getText()+" sebesar "+edtNominal.getText());
+        btnSubmit.setEnabled(false);
     }
 
     private void initDate() {
