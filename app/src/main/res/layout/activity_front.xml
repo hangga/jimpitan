@@ -86,7 +86,7 @@
             android:padding="32dp"
             android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"
-            android:background="@drawable/selector_btn_scanner"
+            android:background="@color/putih"
             android:src="@drawable/ic_scan"
             android:visibility="visible"/>
 
@@ -152,7 +152,8 @@
             android:layout_width="200dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="4dp"
             android:layout_above="@+id/flowRp">
 
             <EditText
@@ -169,9 +170,8 @@
 
         </android.support.design.widget.TextInputLayout>
 
-        <com.nex3z.flowlayout.FlowLayout
+        <HorizontalScrollView
             android:id="@+id/flowRp"
-            android:layout_toRightOf="@+id/txtRp"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_above="@+id/btnSubmit"
             android:layout_width="wrap_content"
@@ -179,11 +179,13 @@
             android:padding="4dp"
             android:gravity="left"
             android:foregroundGravity="left"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            app:flChildSpacing="auto"
-            app:flChildSpacingForLastRow="align"
-            app:flRowSpacing="8dp">
-        </com.nex3z.flowlayout.FlowLayout>
+            android:layout_marginBottom="@dimen/activity_vertical_margin">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </LinearLayout>
+        </HorizontalScrollView>
 
         <Button
             android:id="@+id/btnSubmit"

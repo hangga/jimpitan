@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -26,7 +27,6 @@ import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
-import com.nex3z.flowlayout.FlowLayout;
 
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -49,7 +49,7 @@ public class FrontActivity extends BaseActivity {
     private ImageButton btnScanner;
     private TextInputLayout inputNominal;
     private EditText edtNominal;
-    private FlowLayout flowRp;
+    private HorizontalScrollView flowRp;
     private Button btnSubmit;
     private Switch swtcFlash;
     private TextView txtDay, txtNama;
@@ -125,7 +125,7 @@ public class FrontActivity extends BaseActivity {
         inputNominal = (TextInputLayout) findViewById(R.id.inputNominal);
         edtNominal = (EditText) findViewById(R.id.edtNominal);
         edtNominal.addTextChangedListener(rpWatcher);
-        flowRp = (FlowLayout) findViewById(R.id.flowRp);
+        flowRp = (HorizontalScrollView) findViewById(R.id.flowRp);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
         swtcFlash = (Switch) findViewById(R.id.swtcFlash);
         qrCamera = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
@@ -341,7 +341,7 @@ public class FrontActivity extends BaseActivity {
         int dayname = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
-        txtDay.setText("Dinten "+hari + "\n");
+        txtDay.setText("Dinten " + hari + "\n");
         txtDay.append("Surya kaping, " + simpleDateFormat.format(c.getTime()) + "\n");
         txtDay.append("Tabuh " + sJam + " WIB \n");
 
