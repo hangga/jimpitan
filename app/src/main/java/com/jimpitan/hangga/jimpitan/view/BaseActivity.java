@@ -15,9 +15,13 @@ import android.view.View;
 import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.ApiClient;
 import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
+import com.jimpitan.hangga.jimpitan.api.model.Config;
+import com.jimpitan.hangga.jimpitan.api.model.Getconfig;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
+import com.jimpitan.hangga.jimpitan.util.OwnerInfo;
+import com.jimpitan.hangga.jimpitan.util.Utils;
 import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
 import java.util.List;
@@ -35,6 +39,8 @@ public class BaseActivity extends AppCompatActivity {
     //public List<Warga> wargas;
     //public List<Nominal> noms;
     public ApiInterface mApiInterface;
+    public String googleaccount = "";
+    public int mubeng = 0, mulih = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,19 +54,11 @@ public class BaseActivity extends AppCompatActivity {
                 //
             }
         });
-        TelephonyManager tMgr = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Log.d("JIMPITAN-NOMERKU", tMgr.getLine1Number().toString());
-        //String mPhoneNumber = tMgr.getLine1Number();
+
+        //OwnerInfo ownerInfo = new OwnerInfo(BaseActivity.this);
+
+        googleaccount = Utils.getUsername(BaseActivity.this)+"@gmail.com";
+        Log.d("JIMPITAN-AKUNKU", googleaccount);
     }
 
     private void initDummy() {
@@ -73,13 +71,23 @@ public class BaseActivity extends AppCompatActivity {
             new Nominal("2000").save();
             new Nominal("5000").save();
         }
-
-
     }
 
     public void syncData(final OnFinishListener finishListener){
-        Call<Getwarga> getwargaCall = mApiInterface.getWarga();
-        getwargaCall.enqueue(new Callback<Getwarga>() {
+        mApiInterface.getConfig().enqueue(new Callback<Getconfig>() {
+            @Override
+            public void onResponse(Call<Getconfig> call, Response<Getconfig> response) {
+                mubeng = response.body().getConfigList().get(0).getMubeng();
+                mulih = response.body().getConfigList().get(0).getMulih();
+            }
+
+            @Override
+            public void onFailure(Call<Getconfig> call, Throwable t) {
+
+            }
+        });
+
+        mApiInterface.getWarga().enqueue(new Callback<Getwarga>() {
             @Override
             public void onResponse(Call<Getwarga> call, Response<Getwarga> response) {
                 List<com.jimpitan.hangga.jimpitan.api.model.Warga> wargaList = response.body().getListDataWarga();
@@ -100,10 +108,6 @@ public class BaseActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    protected Warga getWarga(int id) {
-        return Warga.find(Warga.class, "idwarga = ?", String.valueOf(id)).get(0);
     }
 
     public void initToolBar() {

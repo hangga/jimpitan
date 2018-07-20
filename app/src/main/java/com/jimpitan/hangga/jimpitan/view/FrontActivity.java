@@ -29,6 +29,7 @@ import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
+import com.jimpitan.hangga.jimpitan.util.Utils;
 import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
 import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
@@ -114,7 +115,6 @@ public class FrontActivity extends BaseActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //if (isValidSend())
                 attemptSend();
             }
         });
@@ -177,21 +177,29 @@ public class FrontActivity extends BaseActivity {
 
     private boolean isValidSend() {
         boolean isValid = true;
-        if (nominal == 0) {
+        /*if (nominal == 0) {
             isValid = false;
-        }
-        if (jam >= 0 && jam < 5) {
+        }*/
+        Log.d("JAM-mubeng", String.valueOf(mubeng));
+        Log.d("JAM-mulih", String.valueOf(mulih));
+        Log.d("JAM-", String.valueOf(jam));
+        if (jam >= mubeng && jam < mulih) {
             isValid = true;
+            Log.d("JAM-", "Valid");
         } else {
             isValid = false;
             ShowSnackBar("Saiki ki ki jam piro e ?");
         }
+        /*if (edtNominal.getText().toString().trim().isEmpty()){
+            isValid = false;
+            inputNominal.setError("Tidak boleh kosong !");
+        }*/
 
         return isValid;
     }
 
     private void attemptSend() {
-        //if (!isValidSend()) return;
+        if (!isValidSend()) return;
         btnSubmit.setVisibility(View.INVISIBLE);
         send_progress.setVisibility(View.VISIBLE);
         try {
@@ -211,7 +219,7 @@ public class FrontActivity extends BaseActivity {
                     String.valueOf(year),
                     String.valueOf(sJam),
                     txtNama.getText().toString(),
-                    nominal).enqueue(new Callback<PostJimpitan>() {
+                    nominal, googleaccount).enqueue(new Callback<PostJimpitan>() {
                 @Override
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
                     OnDataSend();
@@ -286,12 +294,12 @@ public class FrontActivity extends BaseActivity {
         List<Nominal> noms = Nominal.listAll(Nominal.class);
         for (int i = 0; i < noms.size(); i++){
             RpButton btn = new RpButton(FrontActivity.this);
-            btn.setText("Rp."+noms.get(i).getVal());
+            btn.setText("Rp. "+ Utils.rupiah(noms.get(i).getVal()));
             btn.setVal(noms.get(i).getVal());
-            btn.setTextSize(19);
+            btn.setTextSize(18);
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
             btn.setBackgroundResource(R.drawable.selector_btn_nominal);
-            btn.setPadding(22,12,22,12);
+            btn.setPadding(22,14,24,12);
             btn.setLayoutParams(params);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -361,6 +369,7 @@ public class FrontActivity extends BaseActivity {
             }
         } catch (Exception e) {
         }
+        edtNominal.setText("");
         btnScanner.setVisibility(View.VISIBLE);
         ShowSnackBar("Sukses mengambil jimpitan "+txtNama.getText()+" sebesar "+edtNominal.getText());
         btnSubmit.setEnabled(false);
@@ -380,6 +389,7 @@ public class FrontActivity extends BaseActivity {
 
         sJam = sJamFormatComplete.format(c.getTime());
         jam = Integer.parseInt(sJamFormat.format(c.getTime()));
+        if (jam == 24) jam = 0;
         day = c.get(Calendar.DATE);
         year = c.get(Calendar.YEAR);
         month = c.get(Calendar.MONTH) + 1;

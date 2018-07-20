@@ -5,7 +5,7 @@
         <shape  >
             <solid android:color="@color/colorAccent"/>
             <corners
-                android:radius="3dp"/>
+                android:radius="@dimen/nominalrad"/>
         </shape>
     </item>
 
@@ -13,23 +13,23 @@
         <shape xmlns:android="http://schemas.android.com/apk/res/android" >
             <solid android:color="@color/colorAccent"/>
             <corners
-                android:radius="3dp"/>
+                android:radius="@dimen/nominalrad"/>
         </shape>
     </item>
 
     <item android:state_focused="false" >
         <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-            <solid android:color="@color/color_blue"/>
+            <solid android:color="@color/colorPurple"/>
             <corners
-                android:radius="3dp"/>
+                android:radius="@dimen/nominalrad"/>
         </shape>
     </item>
 
     <item android:state_pressed="false" >
         <shape xmlns:android="http://schemas.android.com/apk/res/android" >
-            <solid android:color="@color/color_blue"/>
+            <solid android:color="@color/colorPurple"/>
             <corners
-                android:radius="3dp"
+                android:radius="@dimen/nominalrad"
                 />
         </shape>
     </item>

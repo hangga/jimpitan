@@ -14,6 +14,10 @@ public interface ApiInterface {
     @GET("AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?id=1mgHj9W2WEpubMamySgVrDukhJ65ZHQN1fJS9uy7NJrw&sheet=warga")
     Call<Getwarga> getWarga();
 
+
+    @GET("AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=config")
+    Call<Getconfig> getConfig();
+
     @FormUrlEncoded
     @POST("https://script.google.com/macros/s/AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec")
     Call<PostJimpitan> postJimpitan(@Field("idjimp") String idjimp,
@@ -23,6 +27,7 @@ public interface ApiInterface {
                                   @Field("tahun") String tahun,
                                   @Field("jam") String jam,
                                   @Field("nama") String nama,
-                                  @Field("nominal") int nominal
+                                  @Field("nominal") int nominal,
+                                  @Field("submitby") String submitby
     );
 }
