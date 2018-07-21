@@ -1,13 +1,15 @@
 package com.jimpitan.hangga.jimpitan.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -63,6 +65,55 @@ public class FrontActivity extends BaseActivity {
     private int nominal;
     private BarcodeCapture qrCamera;
     private int id = 0;
+    private TextWatcher rpWatcher = new TextWatcher() {
+        private String current = "";
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            rupiahHandler(s, current);
+        }
+    };
+    private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
+        @Override
+        public void onRetrieved(final Barcode barcode) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    OnDataFound(barcode.displayValue);
+                }
+            });
+        }
+
+        @Override
+        public void onRetrievedMultiple(Barcode closetToClick, List<BarcodeGraphic> barcode) {
+
+        }
+
+        @Override
+        public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
+
+        }
+
+        @Override
+        public void onRetrievedFailed(String reason) {
+
+        }
+
+        @Override
+        public void onPermissionRequestDenied() {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,59 +177,31 @@ public class FrontActivity extends BaseActivity {
         });
     }
 
-    private TextWatcher rpWatcher = new TextWatcher() {
-        private String current = "";
-
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            rupiahHandler(s, current);
-        }
-    };
-
-    private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
-        @Override
-        public void onRetrieved(final Barcode barcode) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    OnDataFound(barcode.displayValue);
-                }
-            });
-        }
-
-        @Override
-        public void onRetrievedMultiple(Barcode closetToClick, List<BarcodeGraphic> barcode) {
-
-        }
-
-        @Override
-        public void onBitmapScanned(SparseArray<Barcode> sparseArray) {
-
-        }
-
-        @Override
-        public void onRetrievedFailed(String reason) {
-
-        }
-
-        @Override
-        public void onPermissionRequestDenied() {
-
-        }
-    };
-
     private void ShowSnackBar(String message) {
         Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_info) {
+            startActivity(new Intent(FrontActivity.this, UserInfoActivity.class));
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean isValidSend() {
@@ -271,12 +294,7 @@ public class FrontActivity extends BaseActivity {
         }
     }
 
-    /*private void stopScan(){
-        btnScanner.setVisibility(View.VISIBLE);
-        qrCamera.stopScanning();
-    }*/
-
-    private void initMain(){
+    private void initMain() {
         send_progress.setVisibility(View.GONE);
         btnSubmit.setEnabled(false);
         layRp.removeAllViews();
@@ -286,19 +304,19 @@ public class FrontActivity extends BaseActivity {
         );
         params.leftMargin = 12;
         List<Nominal> noms = Nominal.listAll(Nominal.class);
-        for (int i = 0; i < noms.size(); i++){
+        for (int i = 0; i < noms.size(); i++) {
             RpButton btn = new RpButton(FrontActivity.this);
-            btn.setText("Rp. "+ Utils.rupiah(noms.get(i).getVal()));
+            btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
             btn.setVal(noms.get(i).getVal());
             btn.setTextSize(18);
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
             btn.setBackgroundResource(R.drawable.selector_btn_nominal);
-            btn.setPadding(22,14,24,12);
+            btn.setPadding(22, 14, 24, 12);
             btn.setLayoutParams(params);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    edtNominal.setText(String.valueOf(((RpButton)view).getVal()));
+                    edtNominal.setText(String.valueOf(((RpButton) view).getVal()));
                 }
             });
             layRp.addView(btn);
@@ -365,7 +383,7 @@ public class FrontActivity extends BaseActivity {
         }
         edtNominal.setText("");
         btnScanner.setVisibility(View.VISIBLE);
-        ShowSnackBar("Sukses mengambil jimpitan "+txtNama.getText()+" sebesar "+edtNominal.getText());
+        ShowSnackBar("Sukses mengambil jimpitan " + txtNama.getText() + " sebesar " + edtNominal.getText());
         btnSubmit.setEnabled(false);
         initCamera();
     }

@@ -27,11 +27,27 @@ public class OwnerInfo {
     //
     // in your AndroidManifest.xml for this code.
 
-    public static String id = null;
-    public static String email = null;
-    public static String phone = null;
-    public static String accountName = null;
-    public static String name = null;
+    /*public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public String getName() {
+        return name;
+    }*/
+
+    public String id = null;
+    public String email = null;
+    public String phone = null;
+    public String accountName = null;
+    public String name = null;
 
     public OwnerInfo(Activity activity) {
         final AccountManager manager = AccountManager.get(activity);

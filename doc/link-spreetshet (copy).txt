@@ -13,10 +13,6 @@ API Endpoint
 POST : https://script.google.com/macros/s/AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec?
 param name  : {idjimp, hari, tanggal, jam, nama, nominal, submitby}
 
-Contone     : https://script.google.com/macros/s/AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec?idjimp=323092018Rabu&hari=Selasa&tanggal=18-Januari-2018&jam=00:00&nama=Hangga Aji Sayekti&nominal=1000&submitby=embuh@gmail.com
-
-
-
 2. Data warga
 
 GET : https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=warga
