@@ -381,9 +381,9 @@ public class FrontActivity extends BaseActivity {
             }
         } catch (Exception e) {
         }
+        ShowSnackBar("Sukses mengambil jimpitan " + txtNama.getText() + " sebesar Rp. " + edtNominal.getText().toString()+",-");
         edtNominal.setText("");
         btnScanner.setVisibility(View.VISIBLE);
-        ShowSnackBar("Sukses mengambil jimpitan " + txtNama.getText() + " sebesar " + edtNominal.getText());
         btnSubmit.setEnabled(false);
         initCamera();
     }
