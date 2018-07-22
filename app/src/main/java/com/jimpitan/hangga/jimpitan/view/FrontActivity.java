@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,7 +63,8 @@ public class FrontActivity extends BaseActivity {
     private TextView txtDay, txtNama;
     private int jam, day, year, month;
     private String hari, sJam;
-    private int nominal;
+    private int dayNum = 0;
+    private int nominal = 0;
     private BarcodeCapture qrCamera;
     private int id = 0;
     private TextWatcher rpWatcher = new TextWatcher() {
@@ -211,12 +213,13 @@ public class FrontActivity extends BaseActivity {
     }
 
     private boolean isValidSend() {
+        //Log.d("JIMPITAN-JAM", String.valueOf(jam));
         boolean isValid;
         if (jam >= mubeng && jam < mulih) {
             isValid = true;
         } else {
             isValid = false;
-            ShowSnackBar("Aktif saat jam ronda mulai pukul "+String.valueOf(mubeng) + ":00 sampai "+String.valueOf(mulih)+" 00");
+            ShowSnackBar("Aktif saat jam ronda mulai pukul "+String.valueOf(mubeng) + ":00 sampai "+String.valueOf(mulih)+":00");
         }
         return isValid;
     }
@@ -231,7 +234,7 @@ public class FrontActivity extends BaseActivity {
 
 
             String generatedUniqueId = String.valueOf(id) + String.valueOf(day) + String.valueOf(month)
-                    + String.valueOf(year) + hari;
+                    + String.valueOf(year) + String.valueOf(dayNum);
 
             //Log.d("JIMPITAN", generatedUniqueId);
             mApiInterface.postJimpitan(
@@ -312,11 +315,19 @@ public class FrontActivity extends BaseActivity {
         List<Nominal> noms = Nominal.listAll(Nominal.class);
         for (int i = 0; i < noms.size(); i++) {
             RpButton btn = new RpButton(FrontActivity.this);
-            btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
+            if (Integer.parseInt(noms.get(i).getVal()) >= 1000){
+                btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
+                btn.setBackgroundResource(R.drawable.selector_btn_nominal_banyak);
+            } else if (noms.get(i).getVal().equalsIgnoreCase("0")){
+                btn.setText("Kosong");
+                btn.setBackgroundResource(R.drawable.selector_btn_nominal_kosong);
+            } else {
+                btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
+                btn.setBackgroundResource(R.drawable.selector_btn_nominal);
+            }
             btn.setVal(noms.get(i).getVal());
             btn.setTextSize(18);
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
-            btn.setBackgroundResource(R.drawable.selector_btn_nominal);
             btn.setPadding(22, 14, 24, 12);
             btn.setLayoutParams(params);
             btn.setOnClickListener(new View.OnClickListener() {
@@ -367,7 +378,7 @@ public class FrontActivity extends BaseActivity {
                 initDate();
                 btnSubmit.setEnabled(true);
             } else {
-                send_progress.setVisibility(View.INVISIBLE);
+                send_progress.setVisibility(View.VISIBLE);
                 syncData(new OnFinishListener() {
                     @Override
                     public void OnFinish() {
@@ -417,9 +428,9 @@ public class FrontActivity extends BaseActivity {
         month = c.get(Calendar.MONTH) + 1;
 
         String[] daynames = getResources().getStringArray(R.array.hari);
-        int dayname = c.get(Calendar.DAY_OF_WEEK);
+        dayNum = c.get(Calendar.DAY_OF_WEEK);
 
-        hari = daynames[dayname - 1]; //hariIna.format(c.getTime());
+        hari = daynames[dayNum - 1]; //hariIna.format(c.getTime());
         txtDay.setText("Diambil pada hari, " + hari + "\n");
         txtDay.append("Tanggal, " + simpleDateFormat.format(c.getTime()) + "\n");
         txtDay.append("Pukul " + sJam + " WIB \n");

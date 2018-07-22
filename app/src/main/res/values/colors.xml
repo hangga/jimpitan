@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPurple">#bb4bfc</color>
+    <color name="colorRed">#db2525</color>
+    <color name="colorBlackGimana">#070606</color>
 
     <color name="color_green">#14808d</color>
     <color name="color_green_seger">#3aaa27</color>
