@@ -315,11 +315,11 @@ public class FrontActivity extends BaseActivity {
         List<Nominal> noms = Nominal.listAll(Nominal.class);
         for (int i = 0; i < noms.size(); i++) {
             RpButton btn = new RpButton(FrontActivity.this);
-            if (Integer.parseInt(noms.get(i).getVal()) >= 1000){
+            if (Integer.parseInt(noms.get(i).getVal()) > 1000){
                 btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal_banyak);
             } else if (noms.get(i).getVal().equalsIgnoreCase("0")){
-                btn.setText("Kosong");
+                btn.setText("KOSONG");
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal_kosong);
             } else {
                 btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
@@ -328,7 +328,7 @@ public class FrontActivity extends BaseActivity {
             btn.setVal(noms.get(i).getVal());
             btn.setTextSize(18);
             btn.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
-            btn.setPadding(22, 14, 24, 12);
+            btn.setPadding(22, 14, 24, 14);
             btn.setLayoutParams(params);
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
