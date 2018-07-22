@@ -27,42 +27,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
+        <TextView
             android:id="@+id/relTop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/divider_grey"
-            >
-            <TextView
-                android:layout_toLeftOf="@+id/swtcFlash"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="12dp"
-                android:background="@color/color_orange_muda"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:text="@string/how_to"
-                android:textColor="@color/color_brown"
-                />
-
-            <!--<ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="28dp"
-                android:layout_marginTop="6dp"
-                android:layout_marginRight="16dp"
-                android:layout_alignLeft="@id/swtcFlash"
-                android:src="@drawable/ic_if_torch"/>-->
-
-            <com.jimpitan.hangga.jimpitan.view.custom.MySwitch
-                android:id="@+id/swtcFlash"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
-                />
-        </RelativeLayout>
-
+            android:layout_height="48dp"
+            android:padding="12dp"
+            android:gravity="center|left"
+            android:textAlignment="center"
+            android:background="@color/color_orange_muda"
+            android:text="@string/how_to"
+            android:textColor="@color/color_brown"
+            />
 
         <fragment
             android:id="@+id/barcode"
@@ -131,6 +106,16 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:background="@mipmap/close"/>
+
+        <com.jimpitan.hangga.jimpitan.view.custom.MySwitch
+            android:id="@+id/swtcFlash"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:padding="4dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/imgClose"
+            android:layout_margin="10dp"
+            />
 
         <ImageButton
             android:id="@+id/btnScanner"
@@ -202,6 +187,8 @@
             android:textColor="@color/putih"
             android:background="@drawable/selector_btn_submit"
             android:text="@string/submit"/>
+
+
 
         <ProgressBar
             android:id="@+id/send_progress"

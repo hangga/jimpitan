@@ -142,7 +142,25 @@ public class FrontActivity extends BaseActivity {
 
         initMain();
 
-        swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        swtcFlash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                swtcFlash.setChecked(!swtcFlash.isChecked());
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        qrCamera.setShowDrawRect(true)
+                                .shouldAutoFocus(true)
+                                .setShowFlash(swtcFlash.isChecked())
+                                .setBarcodeFormat(Barcode.ALL_FORMATS);
+                        qrCamera.setRetrieval(barcodeRetriever);
+                        qrCamera.refresh();
+                    }
+                });
+            }
+        });
+
+        /*swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 runOnUiThread(new Runnable() {
@@ -157,7 +175,7 @@ public class FrontActivity extends BaseActivity {
                     }
                 });
             }
-        });
+        });*/
 
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,8 +198,21 @@ public class FrontActivity extends BaseActivity {
                     id = 0;
                     nominal = 0;
                     edtNominal.setText("");
-                } else
+                } else {
                     btnScanner.setVisibility(View.VISIBLE);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            qrCamera.setShowDrawRect(true)
+                                    .shouldAutoFocus(true)
+                                    .setShowFlash(false)
+                                    .setBarcodeFormat(Barcode.ALL_FORMATS);
+                            qrCamera.setRetrieval(barcodeRetriever);
+                            qrCamera.refresh();
+                        }
+                    });
+                    swtcFlash.setChecked(false);
+                }
             }
         });
     }
