@@ -70,6 +70,7 @@ public class BaseActivity extends AppCompatActivity {
 
         long c = Nominal.count(Nominal.class, null, null);
         if (c < 1){
+            new Nominal("0").save();
             new Nominal("500").save();
             new Nominal("1000").save();
             new Nominal("1500").save();

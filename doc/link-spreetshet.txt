@@ -27,4 +27,12 @@ GET : https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36-
 GET : https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=config
 
 
+4. Query Per Orang
+=query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "'"; 1)
+=query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "'"; 1)
+=query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "'"; 1)
 
+=query(jimpit!A:H; "select G, SUM(H) WHERE D =  " & L5 & " and E =  " & L4 & ""; 1)
+
+
+=query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "', C = '" & L4 & "', D = '" & L5 & "' "; 1)

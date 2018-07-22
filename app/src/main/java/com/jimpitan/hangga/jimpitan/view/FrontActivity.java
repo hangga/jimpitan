@@ -172,7 +172,13 @@ public class FrontActivity extends BaseActivity {
         findViewById(R.id.imgClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btnScanner.setVisibility(View.VISIBLE);
+                if (layData.getVisibility() == View.VISIBLE){
+                    layData.setVisibility(View.GONE);
+                    id = 0;
+                    nominal = 0;
+                    edtNominal.setText("");
+                } else
+                    btnScanner.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -210,7 +216,7 @@ public class FrontActivity extends BaseActivity {
             isValid = true;
         } else {
             isValid = false;
-            ShowSnackBar("Saiki ki ki jam piro e ?");
+            ShowSnackBar("Aktif saat jam ronda mulai pukul "+String.valueOf(mubeng) + ":00 sampai "+String.valueOf(mulih)+" 00");
         }
         return isValid;
     }
@@ -333,7 +339,7 @@ public class FrontActivity extends BaseActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                qrCamera.setShowDrawRect(true)
+                qrCamera.setShowDrawRect(false)
                         //.setSupportMultipleScan(supportMultiple.isChecked())
                         //.setTouchAsCallback(touchBack.isChecked())
                         .shouldAutoFocus(true)
@@ -349,25 +355,29 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void OnDataFound(final String sid) {
-        id = Integer.parseInt(sid);
-        layData.setVisibility(View.VISIBLE);
-        btnScanner.setVisibility(View.GONE);
+        try{
+            id = Integer.parseInt(sid);
+            layData.setVisibility(View.VISIBLE);
+            btnScanner.setVisibility(View.GONE);
 
-        List<Warga> warga = Warga.find(Warga.class, "idwarga = ?", sid);
+            List<Warga> warga = Warga.find(Warga.class, "idwarga = ?", sid);
 
-        if (warga.size() > 0) {
-            txtNama.setText(warga.get(0).getName());
-            initDate();
-            btnSubmit.setEnabled(true);
-        } else {
-            send_progress.setVisibility(View.INVISIBLE);
-            syncData(new OnFinishListener() {
-                @Override
-                public void OnFinish() {
-                    OnDataFound(sid);
-                    send_progress.setVisibility(View.GONE);
-                }
-            });
+            if (warga.size() > 0) {
+                txtNama.setText(warga.get(0).getName());
+                initDate();
+                btnSubmit.setEnabled(true);
+            } else {
+                send_progress.setVisibility(View.INVISIBLE);
+                syncData(new OnFinishListener() {
+                    @Override
+                    public void OnFinish() {
+                        OnDataFound(sid);
+                        send_progress.setVisibility(View.GONE);
+                    }
+                });
+            }
+        }catch (Exception e){
+
         }
     }
 

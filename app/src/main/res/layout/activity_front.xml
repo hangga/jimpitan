@@ -78,28 +78,6 @@
             app:gvb_flash="false"
             app:gvb_rect_colors="@array/rect_color"/>
 
-        <ImageView
-            android:id="@+id/imgClose"
-            android:layout_below="@+id/relTop"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:layout_width="34dp"
-            android:layout_height="34dp"
-            android:background="@mipmap/close"/>
-
-        <ImageButton
-            android:id="@+id/btnScanner"
-            android:layout_below="@+id/relTop"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/inputNominal"
-            android:padding="34dp"
-            android:layout_centerHorizontal="true"
-            android:scaleType="fitCenter"
-            android:background="@color/putih"
-            android:src="@mipmap/qr_code_biru"
-            android:visibility="visible"/>
-
         <RelativeLayout
             android:id="@+id/layData"
             android:layout_below="@+id/relTop"
@@ -145,6 +123,28 @@
                 android:text=""/>
 
         </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_below="@+id/relTop"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:background="@mipmap/close"/>
+
+        <ImageButton
+            android:id="@+id/btnScanner"
+            android:layout_below="@+id/relTop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/inputNominal"
+            android:padding="42dp"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitCenter"
+            android:background="@color/putih"
+            android:src="@mipmap/qr_biru_border"
+            android:visibility="visible"/>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/inputNominal"

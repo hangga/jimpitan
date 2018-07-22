@@ -38,7 +38,7 @@ public class UserInfoActivity extends BaseActivity {
         linInfo.addView(ttx);
 
         TextView ttcredit1 = new TextView(UserInfoActivity.this);
-        ttcredit1.setText("Contributed:\n"+"~Wahyu Jamaludin (Ketua RT)\n~Henry Handoko (Backend Admin) \n~Febrianto (Promotor) \n~Hangga Aji Sayekti (Developer)");
+        ttcredit1.setText("Contributed:\n"+"~Wahyu Jamaludin (Pelindung)\n~Henry Handoko (Backend Admin) \n~Febrianto (Promotor) \n~Hangga Aji Sayekti (Developer)");
         ttcredit1.setLayoutParams(params);
         linInfo.addView(ttcredit1);
 
