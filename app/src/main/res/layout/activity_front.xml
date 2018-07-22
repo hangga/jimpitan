@@ -35,7 +35,7 @@
             >
             <TextView
                 android:layout_toLeftOf="@+id/swtcFlash"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="12dp"
                 android:background="@color/color_orange_muda"
@@ -52,15 +52,14 @@
                 android:layout_alignLeft="@id/swtcFlash"
                 android:src="@drawable/ic_if_torch"/>-->
 
-            <Switch
+            <com.jimpitan.hangga.jimpitan.view.custom.MySwitch
                 android:id="@+id/swtcFlash"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="12dp"
                 android:layout_marginRight="12dp"
-                android:text="@string/lampu"
                 />
         </RelativeLayout>
 

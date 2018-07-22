@@ -33,6 +33,7 @@ import com.jimpitan.hangga.jimpitan.api.model.PostJimpitan;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 import com.jimpitan.hangga.jimpitan.util.Utils;
+import com.jimpitan.hangga.jimpitan.view.custom.MySwitch;
 import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
 import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
@@ -59,7 +60,7 @@ public class FrontActivity extends BaseActivity {
     private HorizontalScrollView flowRp;
     private LinearLayout layRp;
     private Button btnSubmit;
-    private Switch swtcFlash;
+    private MySwitch swtcFlash;
     private TextView txtDay, txtNama;
     private int jam, day, year, month;
     private String hari, sJam;
@@ -134,7 +135,7 @@ public class FrontActivity extends BaseActivity {
         flowRp = (HorizontalScrollView) findViewById(R.id.flowRp);
         layRp = (LinearLayout) findViewById(R.id.layRp);
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
-        swtcFlash = (Switch) findViewById(R.id.swtcFlash);
+        swtcFlash = (MySwitch) findViewById(R.id.swtcFlash);
         qrCamera = (BarcodeCapture) getSupportFragmentManager().findFragmentById(R.id.barcode);
         layData.setVisibility(View.GONE);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
@@ -315,12 +316,16 @@ public class FrontActivity extends BaseActivity {
         List<Nominal> noms = Nominal.listAll(Nominal.class);
         for (int i = 0; i < noms.size(); i++) {
             RpButton btn = new RpButton(FrontActivity.this);
-            if (Integer.parseInt(noms.get(i).getVal()) > 1000){
-                btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
-                btn.setBackgroundResource(R.drawable.selector_btn_nominal_banyak);
-            } else if (noms.get(i).getVal().equalsIgnoreCase("0")){
+            int nom = Integer.parseInt(noms.get(i).getVal());
+            if (nom == 0){
                 btn.setText("KOSONG");
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal_kosong);
+            }else if (nom < 500){
+                btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
+                btn.setBackgroundResource(R.drawable.selector_btn_nominal_kosong);
+            } else if (nom > 1000){
+                btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
+                btn.setBackgroundResource(R.drawable.selector_btn_nominal_banyak);
             } else {
                 btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal);

@@ -36,3 +36,5 @@ GET : https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36-
 
 
 =query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "', C = '" & L4 & "', D = '" & L5 & "' "; 1)
+
+=Query(ARRAYFORMULA(IF(E2:E="";IFERROR(VLookup(E2:E;A2:B;{1\2};0);)));"Select * Where Col1 <>''";0)
