@@ -7,20 +7,17 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.android.gms.samples.vision.barcodereader.BarcodeCapture;
@@ -37,11 +34,9 @@ import com.jimpitan.hangga.jimpitan.view.custom.MySwitch;
 import com.jimpitan.hangga.jimpitan.view.custom.RpButton;
 import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import retrofit2.Call;
@@ -94,7 +89,7 @@ public class FrontActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    OnDataFound(barcode.displayValue);
+                    findDataById(barcode.displayValue);
                 }
             });
         }
@@ -178,7 +173,7 @@ public class FrontActivity extends BaseActivity {
         findViewById(R.id.imgClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (layData.getVisibility() == View.VISIBLE){
+                if (layData.getVisibility() == View.VISIBLE) {
                     layData.setVisibility(View.GONE);
                     id = 0;
                     nominal = 0;
@@ -188,7 +183,7 @@ public class FrontActivity extends BaseActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            qrCamera.setShowDrawRect(true)
+                            qrCamera.setShowDrawRect(false)
                                     .shouldAutoFocus(true)
                                     .setShowFlash(false)
                                     .setBarcodeFormat(Barcode.ALL_FORMATS);
@@ -215,12 +210,8 @@ public class FrontActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_info) {
             startActivity(new Intent(FrontActivity.this, UserInfoActivity.class));
             return true;
@@ -230,12 +221,14 @@ public class FrontActivity extends BaseActivity {
     }
 
     private boolean isValidSend() {
-        boolean isValid;
-        if (jam >= mubeng && jam < mulih) {
+        boolean isValid = false;
+        if (mubeng == 0 && mulih == 0){
+            isValid = true;
+        }else if (jam >= mubeng && jam < mulih) {
             isValid = true;
         } else {
             isValid = false;
-            ShowSnackBar("Aktif saat jam ronda mulai pukul "+String.valueOf(mubeng) + ":00 sampai "+String.valueOf(mulih)+":00");
+            ShowSnackBar("Aktif saat jam ronda mulai pukul " + String.valueOf(mubeng) + ":00 sampai " + String.valueOf(mulih) + ":00");
         }
         return isValid;
     }
@@ -252,7 +245,6 @@ public class FrontActivity extends BaseActivity {
             String generatedUniqueId = String.valueOf(id) + String.valueOf(day) + String.valueOf(month)
                     + String.valueOf(year) + String.valueOf(dayNum);
 
-            //Log.d("JIMPITAN", generatedUniqueId);
             mApiInterface.postJimpitan(
                     generatedUniqueId,
                     hari,
@@ -271,9 +263,9 @@ public class FrontActivity extends BaseActivity {
 
                 @Override
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
-
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
+                    ShowSnackBar("Periksa koneksi Internet Anda.");
                 }
             });
         } catch (Exception e) {
@@ -306,13 +298,13 @@ public class FrontActivity extends BaseActivity {
         for (int i = 0; i < noms.size(); i++) {
             RpButton btn = new RpButton(FrontActivity.this);
             int nom = Integer.parseInt(noms.get(i).getVal());
-            if (nom == 0){
+            if (nom == 0) {
                 btn.setText("KOSONG");
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal_kosong);
-            }else if (nom < 500){
+            } else if (nom < 500) {
                 btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal_kosong);
-            } else if (nom > 1000){
+            } else if (nom > 1000) {
                 btn.setText("Rp. " + Utils.rupiah(noms.get(i).getVal()));
                 btn.setBackgroundResource(R.drawable.selector_btn_nominal_banyak);
             } else {
@@ -345,22 +337,17 @@ public class FrontActivity extends BaseActivity {
             @Override
             public void run() {
                 qrCamera.setShowDrawRect(false)
-                        //.setSupportMultipleScan(supportMultiple.isChecked())
-                        //.setTouchAsCallback(touchBack.isChecked())
                         .shouldAutoFocus(true)
                         .setShowFlash(swtcFlash.isChecked())
                         .setBarcodeFormat(Barcode.ALL_FORMATS);
-                //.setCameraFacing(frontCam.isChecked() ? CameraSource.CAMERA_FACING_FRONT : CameraSource.CAMERA_FACING_BACK)
-                //.setShouldShowText(drawText.isChecked());
-
                 qrCamera.setRetrieval(barcodeRetriever);
                 qrCamera.refresh();
             }
         });
     }
 
-    private void OnDataFound(final String sid) {
-        try{
+    private void findDataById(final String sid) {
+        try {
             id = Integer.parseInt(sid);
             layData.setVisibility(View.VISIBLE);
             btnScanner.setVisibility(View.GONE);
@@ -376,12 +363,12 @@ public class FrontActivity extends BaseActivity {
                 syncData(new OnFinishListener() {
                     @Override
                     public void OnFinish() {
-                        OnDataFound(sid);
+                        findDataById(sid);
                         send_progress.setVisibility(View.GONE);
                     }
                 });
             }
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
     }
@@ -396,7 +383,7 @@ public class FrontActivity extends BaseActivity {
             }
         } catch (Exception e) {
         }
-        ShowSnackBar("Sukses mengambil jimpitan " + txtNama.getText() + " sebesar Rp. " + edtNominal.getText().toString()+",-");
+        ShowSnackBar("Sukses mengambil jimpitan " + txtNama.getText() + " sebesar Rp. " + edtNominal.getText().toString() + ",-");
         edtNominal.setText("");
         btnScanner.setVisibility(View.VISIBLE);
         btnSubmit.setEnabled(false);

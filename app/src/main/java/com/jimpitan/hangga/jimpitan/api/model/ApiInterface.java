@@ -19,7 +19,7 @@ public interface ApiInterface {
     Call<Getconfig> getConfig();
 
     @FormUrlEncoded
-    @POST("https://script.google.com/macros/s/AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec")
+    @POST("AKfycbwZfFSifiACnWfWO2g60I9Y5ItmQD2I-zzBoprs64R8Xa8eCto/exec")
     Call<PostJimpitan> postJimpitan(@Field("idjimp") String idjimp,
                                   @Field("hari") String hari,
                                   @Field("tanggal") String tanggal,

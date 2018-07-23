@@ -1,13 +1,10 @@
 package com.jimpitan.hangga.jimpitan.view;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
-
-import org.w3c.dom.Text;
 
 public class UserInfoActivity extends BaseActivity {
 
@@ -29,16 +26,16 @@ public class UserInfoActivity extends BaseActivity {
 
         TextView textView = new TextView(UserInfoActivity.this);
         textView.setLayoutParams(params);
-        textView.setText("AKUN ANDA:\n"+googleaccount);
+        textView.setText("AKUN ANDA:\n" + googleaccount);
         linInfo.addView(textView);
 
         TextView ttx = new TextView(UserInfoActivity.this);
-        ttx.setText("DEVICE MODEL:\n"+android.os.Build.MODEL);
+        ttx.setText("DEVICE MODEL:\n" + android.os.Build.MODEL);
         ttx.setLayoutParams(params);
         linInfo.addView(ttx);
 
         TextView ttcredit1 = new TextView(UserInfoActivity.this);
-        ttcredit1.setText("Contributed:\n"+"~Wahyu Jamaludin (Pelindung)\n~Henry Handoko (Backend Admin) \n~Febrianto (Promotor) \n~Hangga Aji Sayekti (Developer)");
+        ttcredit1.setText("Contributed:\n" + "~Wahyu Jamaludin (Pelindung)\n~Henry Handoko (Backend Admin) \n~Febrianto (Promotor) \n~Hangga Aji Sayekti (Developer)");
         ttcredit1.setLayoutParams(params);
         linInfo.addView(ttcredit1);
 

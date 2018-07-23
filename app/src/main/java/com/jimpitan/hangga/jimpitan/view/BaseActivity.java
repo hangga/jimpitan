@@ -1,26 +1,18 @@
 package com.jimpitan.hangga.jimpitan.view;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 
 import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.ApiClient;
 import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
-import com.jimpitan.hangga.jimpitan.api.model.Config;
 import com.jimpitan.hangga.jimpitan.api.model.Getconfig;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
-import com.jimpitan.hangga.jimpitan.util.OwnerInfo;
 import com.jimpitan.hangga.jimpitan.util.Utils;
 import com.jimpitan.hangga.jimpitan.view.custominterface.OnFinishListener;
 
@@ -35,9 +27,6 @@ import retrofit2.Response;
  */
 
 public class BaseActivity extends AppCompatActivity {
-    //public DaoImplementation daoImplementation;
-    //public List<Warga> wargas;
-    //public List<Nominal> noms;
     public ApiInterface mApiInterface;
     public String googleaccount = "";
     public int mubeng = 0, mulih = 5;
@@ -45,7 +34,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //daoImplementation = new DaoImplementation(this);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
         initDummy();
         syncData(new OnFinishListener() {
@@ -55,10 +43,9 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
 
-        //OwnerInfo ownerInfo = new OwnerInfo(BaseActivity.this);
 
-        googleaccount = Utils.getUsername(BaseActivity.this)+"@gmail.com";
-        //Log.d("JIMPITAN-AKUNKU", googleaccount);
+        googleaccount = Utils.getUsername(BaseActivity.this) + "@gmail.com";
+
     }
 
     private void initDummy() {
@@ -69,7 +56,7 @@ public class BaseActivity extends AppCompatActivity {
         Log.d("JIMPITAN-AKUN", ownerInfo.name);*/
 
         long c = Nominal.count(Nominal.class, null, null);
-        if (c < 1){
+        if (c < 1) {
             new Nominal("0").save();
             new Nominal("500").save();
             new Nominal("1000").save();
@@ -79,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
-    public void syncData(final OnFinishListener finishListener){
+    public void syncData(final OnFinishListener finishListener) {
         mApiInterface.getConfig().enqueue(new Callback<Getconfig>() {
             @Override
             public void onResponse(Call<Getconfig> call, Response<Getconfig> response) {
