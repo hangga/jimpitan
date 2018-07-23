@@ -197,8 +197,22 @@ public class FrontActivity extends BaseActivity {
         });
     }
 
-    private void ShowSnackBar(String message) {
-        Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_LONG).show();
+    private void ShowSnackBar(String message, int background) {
+        final Snackbar snackbar = Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
+        textView.setTextSize(22);
+
+        View sbView = snackbarView;
+        sbView.setBackgroundColor(ContextCompat.getColor(FrontActivity.this, background));
+        /*snackbar.setAction("OK", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                snackbar.dismiss();
+            }
+        });*/
+        snackbar.show();
     }
 
     @Override
@@ -228,7 +242,7 @@ public class FrontActivity extends BaseActivity {
             isValid = true;
         } else {
             isValid = false;
-            ShowSnackBar("Aktif saat jam ronda mulai pukul " + String.valueOf(mubeng) + ":00 sampai " + String.valueOf(mulih) + ":00");
+            //ShowSnackBar("Aktif saat jam ronda mulai pukul " + String.valueOf(mubeng) + ":00 sampai " + String.valueOf(mulih) + ":00");
         }
         return isValid;
     }
@@ -265,7 +279,7 @@ public class FrontActivity extends BaseActivity {
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
                     Log.d("JIMPITAN_ERR",t.getMessage());
-                    ShowSnackBar("Periksa koneksi Internet Anda.");
+                    ShowSnackBar("Periksa koneksi Internet Anda.", R.color.colorBlackGimana);
                 }
             });
         } catch (Exception e) {
@@ -374,21 +388,24 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void OnDataSend(int status, String message) {
-        if (status != 200) return;
-        layData.setVisibility(View.GONE);
-        btnScanner.setVisibility(View.VISIBLE);
-        try {
-            long size = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).size();
-            if (size < 1) {
-                new Nominal(String.valueOf(nominal)).save();
+        if (status == 200) {
+            layData.setVisibility(View.GONE);
+            btnScanner.setVisibility(View.VISIBLE);
+            try {
+                long size = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).size();
+                if (size < 1) {
+                    new Nominal(String.valueOf(nominal)).save();
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
+            ShowSnackBar(message, R.color.color_green_seger);
+            edtNominal.setText("");
+            btnScanner.setVisibility(View.VISIBLE);
+            btnSubmit.setEnabled(false);
+            initCamera();
+        } else {
+            ShowSnackBar(message, R.color.colorRed);
         }
-        ShowSnackBar(message);
-        edtNominal.setText("");
-        btnScanner.setVisibility(View.VISIBLE);
-        btnSubmit.setEnabled(false);
-        initCamera();
     }
 
     private void initDate() {
