@@ -30,4 +30,18 @@ public interface ApiInterface {
                                   @Field("nominal") int nominal,
                                   @Field("submitby") String submitby
     );
+
+    @FormUrlEncoded
+    @POST("AKfycbyPZ7AneiiqCLAo0wxxY5u8zj_FYxJOkkqX5gqiJ5gNXXoanuw/exec")
+    Call<PostJimpitan> postJimpitanNew(@Field("idjimp") String idjimp,
+                                    @Field("hari") String hari,
+                                    @Field("tanggal") String tanggal,
+                                    @Field("bulan") String bulan,
+                                    @Field("tahun") String tahun,
+                                    @Field("jam") String jam,
+                                    @Field("jambulat") int jambulat,
+                                    @Field("nama") String nama,
+                                    @Field("nominal") int nominal,
+                                    @Field("submitby") String submitby
+    );
 }

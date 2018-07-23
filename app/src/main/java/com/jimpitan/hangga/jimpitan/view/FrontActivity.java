@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -197,7 +198,7 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void ShowSnackBar(String message) {
-        Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(findViewById(R.id.activityRoot), message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -233,29 +234,28 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void attemptSend() {
-        if (!isValidSend()) return;
+        //if (!isValidSend()) return;
         btnSubmit.setVisibility(View.INVISIBLE);
         send_progress.setVisibility(View.VISIBLE);
         try {
             String sNominal = edtNominal.getText().toString().replace(".", "");
             nominal = Integer.parseInt(sNominal);
 
-
             String generatedUniqueId = String.valueOf(id) + String.valueOf(day) + String.valueOf(month)
                     + String.valueOf(year) + String.valueOf(dayNum);
 
-            mApiInterface.postJimpitan(
+            mApiInterface.postJimpitanNew(
                     generatedUniqueId,
                     hari,
                     String.valueOf(day),
                     String.valueOf(month),
                     String.valueOf(year),
-                    String.valueOf(sJam),
+                    String.valueOf(sJam),jam,
                     txtNama.getText().toString(),
                     nominal, googleaccount).enqueue(new Callback<PostJimpitan>() {
                 @Override
                 public void onResponse(Call<PostJimpitan> call, Response<PostJimpitan> response) {
-                    OnDataSend();
+                    OnDataSend(response.body().getStatus(), response.body().getMessage());
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
                 }
@@ -264,6 +264,7 @@ public class FrontActivity extends BaseActivity {
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
+                    Log.d("JIMPITAN_ERR",t.getMessage());
                     ShowSnackBar("Periksa koneksi Internet Anda.");
                 }
             });
@@ -372,7 +373,8 @@ public class FrontActivity extends BaseActivity {
         }
     }
 
-    private void OnDataSend() {
+    private void OnDataSend(int status, String message) {
+        if (status != 200) return;
         layData.setVisibility(View.GONE);
         btnScanner.setVisibility(View.VISIBLE);
         try {
@@ -382,7 +384,7 @@ public class FrontActivity extends BaseActivity {
             }
         } catch (Exception e) {
         }
-        ShowSnackBar("Sukses mengambil jimpitan " + txtNama.getText() + " sebesar Rp. " + edtNominal.getText().toString() + ",-");
+        ShowSnackBar(message);
         edtNominal.setText("");
         btnScanner.setVisibility(View.VISIBLE);
         btnSubmit.setEnabled(false);

@@ -7,18 +7,18 @@ package com.jimpitan.hangga.jimpitan.api.model;
 import com.google.gson.annotations.SerializedName;
 
 public class PostJimpitan {
+    public String getMessage() {
+        return message;
+    }
+
+    @SerializedName("message")
+    String message;
+
+    public int getStatus() {
+        return status;
+    }
+
     @SerializedName("status")
-    String status;
-    @SerializedName("nama")
-    String nama;
-    @SerializedName("nominal")
-    int nominal;
+    int status;
 
-    public String getNama() {
-        return nama;
-    }
-
-    public int getNominal() {
-        return nominal;
-    }
 }
