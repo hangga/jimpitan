@@ -24,24 +24,17 @@ public class UserInfoActivity extends BaseActivity {
         );
         params.setMargins(10, 16, 10, 16);
 
-        TextView textView = new TextView(UserInfoActivity.this);
-        textView.setLayoutParams(params);
-        textView.setText("AKUN ANDA:\n" + googleaccount);
-        linInfo.addView(textView);
+        geterateTextItem("AKUN ANDA:\n" + googleaccount, params);
+        geterateTextItem("DEVICE MODEL:\n" + android.os.Build.MODEL, params);
+        geterateTextItem("Contributed:\n" + "~Wahyu Jamaludin (Pelindung)\n~Henry Handoko (Backend Admin) \n~Febrianto (Promotor) \n~Hangga Aji Sayekti (Developer)", params);
+        geterateTextItem("Jimpitan Pintar © 2018", params);
+    }
 
-        TextView ttx = new TextView(UserInfoActivity.this);
-        ttx.setText("DEVICE MODEL:\n" + android.os.Build.MODEL);
-        ttx.setLayoutParams(params);
-        linInfo.addView(ttx);
-
-        TextView ttcredit1 = new TextView(UserInfoActivity.this);
-        ttcredit1.setText("Contributed:\n" + "~Wahyu Jamaludin (Pelindung)\n~Henry Handoko (Backend Admin) \n~Febrianto (Promotor) \n~Hangga Aji Sayekti (Developer)");
-        ttcredit1.setLayoutParams(params);
-        linInfo.addView(ttcredit1);
-
+    private void geterateTextItem(String title, LinearLayout.LayoutParams params){
         TextView ttInfo = new TextView(UserInfoActivity.this);
-        ttInfo.setText("Jimpitan Pintar © 2018");
+        ttInfo.setText(title);
         ttInfo.setLayoutParams(params);
         linInfo.addView(ttInfo);
     }
+
 }

@@ -65,7 +65,6 @@ public class FrontActivity extends BaseActivity {
     private int id = 0;
 
     private TextWatcher rpWatcher = new TextWatcher() {
-        //private String current = "";
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

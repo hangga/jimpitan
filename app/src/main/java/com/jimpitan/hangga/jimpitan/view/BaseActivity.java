@@ -42,18 +42,11 @@ public class BaseActivity extends AppCompatActivity {
                 //
             }
         });
-
-
         googleaccount = Utils.getUsername(BaseActivity.this) + "@gmail.com";
 
     }
 
     private void initDummy() {
-        /*OwnerInfo ownerInfo = new OwnerInfo(BaseActivity.this);
-
-        Log.d("JIMPITAN-AKUN", ownerInfo.email);
-        Log.d("JIMPITAN-AKUN", ownerInfo.phone);
-        Log.d("JIMPITAN-AKUN", ownerInfo.name);*/
 
         long c = Nominal.count(Nominal.class, null, null);
         if (c < 1) {
@@ -107,8 +100,6 @@ public class BaseActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.drawable.ic_qr_small);
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,27 +108,12 @@ public class BaseActivity extends AppCompatActivity {
         });
     }
 
-    public void initToolBar(String title) {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setLogo(R.drawable.ic_qr_small);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-    }
 
     public void initToolBar(String title, String subtitle) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(title);
         toolbar.setSubtitle(subtitle);
         setSupportActionBar(toolbar);
-        //getSupportActionBar().setLogo(R.drawable.ic_qr_small);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
