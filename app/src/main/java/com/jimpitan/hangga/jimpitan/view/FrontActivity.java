@@ -68,8 +68,9 @@ public class FrontActivity extends BaseActivity {
     private int nominal = 0;
     private BarcodeCapture qrCamera;
     private int id = 0;
+
     private TextWatcher rpWatcher = new TextWatcher() {
-        private String current = "";
+        //private String current = "";
 
         @Override
         public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -83,9 +84,10 @@ public class FrontActivity extends BaseActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-            rupiahHandler(s, current);
+            rupiahHandler(s);
         }
     };
+
     private BarcodeRetriever barcodeRetriever = new BarcodeRetriever() {
         @Override
         public void onRetrieved(final Barcode barcode) {
@@ -160,23 +162,6 @@ public class FrontActivity extends BaseActivity {
             }
         });
 
-        /*swtcFlash.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        qrCamera.setShowDrawRect(true)
-                                .shouldAutoFocus(true)
-                                .setShowFlash(swtcFlash.isChecked())
-                                .setBarcodeFormat(Barcode.ALL_FORMATS);
-                        qrCamera.setRetrieval(barcodeRetriever);
-                        qrCamera.refresh();
-                    }
-                });
-            }
-        });*/
-
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,7 +230,6 @@ public class FrontActivity extends BaseActivity {
     }
 
     private boolean isValidSend() {
-        //Log.d("JIMPITAN-JAM", String.valueOf(jam));
         boolean isValid;
         if (jam >= mubeng && jam < mulih) {
             isValid = true;
@@ -299,38 +283,12 @@ public class FrontActivity extends BaseActivity {
 
     }
 
-    private void rupiahHandler(Editable s, String current) {
-        if (!s.toString().equals(current)) {
+    private void rupiahHandler(Editable s) {
+        if (!s.toString().isEmpty()) {
             edtNominal.removeTextChangedListener(rpWatcher);
-
-            Locale local = new Locale("id", "id");
-            String replaceable = String.format("[Rp,.\\s]",
-                    NumberFormat.getCurrencyInstance().getCurrency()
-                            .getSymbol(local));
-            String cleanString = s.toString().replaceAll(replaceable,
-                    "");
-
-            double parsed;
-            try {
-                parsed = Double.parseDouble(cleanString);
-            } catch (NumberFormatException e) {
-                parsed = 0.00;
-            }
-
-            NumberFormat formatter = NumberFormat
-                    .getCurrencyInstance(local);
-            formatter.setMaximumFractionDigits(0);
-            formatter.setParseIntegerOnly(true);
-            String formatted = formatter.format((parsed));
-
-            String replace = String.format("[Rp\\s]",
-                    NumberFormat.getCurrencyInstance().getCurrency()
-                            .getSymbol(local));
-            String clean = formatted.replaceAll(replace, "");
-
-            current = formatted;
-            edtNominal.setText(clean);
-            edtNominal.setSelection(clean.length());
+            String rupiah = Utils.rupiah(s.toString());
+            edtNominal.setText(rupiah);
+            edtNominal.setSelection(rupiah.length());
             edtNominal.addTextChangedListener(rpWatcher);
         }
     }
