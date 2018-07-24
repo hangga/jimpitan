@@ -72,7 +72,9 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void updateConfig(String key, String val){
-        Config.find(Config.class, "key = ?", key).get(0).setVal(val);
+        Config config = Config.find(Config.class, "key = ?", key).get(0);
+        config.setVal(val);
+        config.save();
     }
 
     public boolean isVibrate(){
