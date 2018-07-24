@@ -145,7 +145,7 @@ public class FrontActivity extends BaseActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        qrCamera.setShowDrawRect(true)
+                        qrCamera.setShowDrawRect(false)
                                 .shouldAutoFocus(true)
                                 .setShowFlash(swtcFlash.isChecked())
                                 .setBarcodeFormat(Barcode.ALL_FORMATS);
@@ -418,9 +418,8 @@ public class FrontActivity extends BaseActivity {
         dayNum = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayNum - 1];
-        txtDay.setText("Diambil pada hari, " + hari + "\n");
-        txtDay.append("Tanggal, " + simpleDateFormat.format(c.getTime()) + "\n");
-        txtDay.append("Pukul " + sJam + " WIB \n");
+        txtDay.setText(hari+", " + simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.append("Pukul, " + sJam + " WIB\n");
 
     }
 }
