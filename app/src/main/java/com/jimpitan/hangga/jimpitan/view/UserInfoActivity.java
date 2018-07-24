@@ -1,22 +1,39 @@
 package com.jimpitan.hangga.jimpitan.view;
 
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jimpitan.hangga.jimpitan.R;
+import com.jimpitan.hangga.jimpitan.db.model.Config;
 
 public class UserInfoActivity extends BaseActivity {
 
-    LinearLayout linInfo;
+    private LinearLayout linInfo;
+    private SwitchCompat swtVibrate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
         linInfo = (LinearLayout) findViewById(R.id.linInfo);
-        linInfo.removeAllViews();
-        initToolBar(getResources().getString(R.string.app_name), "Informasi Pengguna");
+        swtVibrate = (SwitchCompat) findViewById(R.id.swtVibrate);
+        swtVibrate.setChecked(isVibrate());
+        swtVibrate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b == true){
+                    updateConfig(VIBRATE, "1");
+                } else {
+                    updateConfig(VIBRATE, "0");
+                }
+            }
+        });
+
+        //linInfo.removeAllViews();
+        initToolBar(getResources().getString(R.string.app_name), "Pengaturan");
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,

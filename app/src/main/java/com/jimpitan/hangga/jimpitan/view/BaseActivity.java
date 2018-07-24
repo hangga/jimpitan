@@ -14,6 +14,7 @@ import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.ApiClient;
 import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
+import com.jimpitan.hangga.jimpitan.db.model.Config;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
 import com.jimpitan.hangga.jimpitan.util.Utils;
@@ -30,6 +31,9 @@ import retrofit2.Response;
  */
 
 public class BaseActivity extends AppCompatActivity {
+
+    public static String VIBRATE = "vibrate";
+
     public ApiInterface mApiInterface;
     public String googleaccount = "";
 
@@ -37,7 +41,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiInterface = ApiClient.getClient().create(ApiInterface.class);
-        initDummy();
+        initFirst();
         syncData(new OnFinishListener() {
             @Override
             public void OnFinish() {
@@ -45,10 +49,9 @@ public class BaseActivity extends AppCompatActivity {
             }
         });
         googleaccount = Utils.getUsername(BaseActivity.this) + "@gmail.com";
-
     }
 
-    private void initDummy() {
+    private void initFirst() {
 
         long c = Nominal.count(Nominal.class, null, null);
         if (c < 1) {
@@ -59,6 +62,21 @@ public class BaseActivity extends AppCompatActivity {
             new Nominal("2000").save();
             new Nominal("5000").save();
         }
+
+        if (Config.find(Config.class, "key = ?", VIBRATE).size() == 0)
+            new Config(VIBRATE, "1").save();
+    }
+
+    public String getConfig(String key){
+        return Config.find(Config.class, "key = ?", key).get(0).getVal();
+    }
+
+    public void updateConfig(String key, String val){
+        Config.find(Config.class, "key = ?", key).get(0).setVal(val);
+    }
+
+    public boolean isVibrate(){
+        return (getConfig(VIBRATE).equalsIgnoreCase("1"));
     }
 
     public void syncData(final OnFinishListener finishListener) {

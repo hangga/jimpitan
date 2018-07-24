@@ -4,6 +4,9 @@
     <string name="nominal">Rp.</string>
     <string name="submit">Kirim</string>
     <string name="lampu">Lampu </string>
+    <string name="getar">Getar </string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
     <string name="cek_koneksi">Periksa koneksi Internet Anda.</string>
 
     <!-- Strings related to login -->

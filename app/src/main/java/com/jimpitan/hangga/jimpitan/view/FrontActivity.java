@@ -379,7 +379,7 @@ public class FrontActivity extends BaseActivity {
                 txtNama.setText(warga.get(0).getName());
                 initDate();
                 btnSubmit.setEnabled(true);
-                doVibrating();
+                if (isVibrate()) doVibrating();
             } else {
                 send_progress.setVisibility(View.VISIBLE);
                 syncData(new OnFinishListener() {

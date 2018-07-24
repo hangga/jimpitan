@@ -28,10 +28,13 @@
         android:layout_below="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/swtVibrate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/lampu"/>
+            android:textOff="@string/off"
+            android:textOn="@string/on"
+            android:text="@string/getar"/>
     </LinearLayout>
 
 </RelativeLayout>
