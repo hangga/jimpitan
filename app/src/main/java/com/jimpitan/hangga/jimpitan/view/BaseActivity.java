@@ -9,7 +9,6 @@ import android.view.View;
 import com.jimpitan.hangga.jimpitan.R;
 import com.jimpitan.hangga.jimpitan.api.ApiClient;
 import com.jimpitan.hangga.jimpitan.api.model.ApiInterface;
-import com.jimpitan.hangga.jimpitan.api.model.Getconfig;
 import com.jimpitan.hangga.jimpitan.api.model.Getwarga;
 import com.jimpitan.hangga.jimpitan.db.model.Nominal;
 import com.jimpitan.hangga.jimpitan.db.model.Warga;
@@ -29,7 +28,6 @@ import retrofit2.Response;
 public class BaseActivity extends AppCompatActivity {
     public ApiInterface mApiInterface;
     public String googleaccount = "";
-    public int mubeng = 0, mulih = 5;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -60,18 +58,6 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void syncData(final OnFinishListener finishListener) {
-        mApiInterface.getConfig().enqueue(new Callback<Getconfig>() {
-            @Override
-            public void onResponse(Call<Getconfig> call, Response<Getconfig> response) {
-                mubeng = response.body().getConfigList().get(0).getMubeng();
-                mulih = response.body().getConfigList().get(0).getMulih();
-            }
-
-            @Override
-            public void onFailure(Call<Getconfig> call, Throwable t) {
-
-            }
-        });
 
         mApiInterface.getWarga().enqueue(new Callback<Getwarga>() {
             @Override
@@ -86,7 +72,7 @@ public class BaseActivity extends AppCompatActivity {
                     if (Warga.find(Warga.class, "idwarga = ?", sid).size() == 0)
                         new Warga(wargaList.get(i).getId(), wargaList.get(i).getNama()).save();
                 }
-                finishListener.OnFinish();
+                if (finishListener != null) finishListener.OnFinish();
             }
 
             @Override

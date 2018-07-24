@@ -1,7 +1,6 @@
 package com.jimpitan.hangga.jimpitan.view.custom;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 
@@ -31,16 +30,8 @@ public class RpButton extends AppCompatButton {
         return val;
     }
 
-    public void setVal(long val) {
-        this.val = val;
-        this.setText(String.valueOf(val));
-    }
-
     public void setVal(String val) {
         this.val = Long.parseLong(val.replace(".", ""));
     }
 
-    private void init(Context context) {
-        setTextColor(ContextCompat.getColor(context, R.color.putih));
-    }
 }

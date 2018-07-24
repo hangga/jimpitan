@@ -7,7 +7,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -160,7 +159,8 @@ public class FrontActivity extends BaseActivity {
         btnScanner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startScan();
+                initCamera();
+                btnScanner.setVisibility(View.GONE);
             }
         });
 
@@ -202,16 +202,10 @@ public class FrontActivity extends BaseActivity {
         View snackbarView = snackbar.getView();
         TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(ContextCompat.getColor(FrontActivity.this, R.color.putih));
-        textView.setTextSize(22);
+        textView.setTextSize(20);
 
         View sbView = snackbarView;
         sbView.setBackgroundColor(ContextCompat.getColor(FrontActivity.this, background));
-        /*snackbar.setAction("OK", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                snackbar.dismiss();
-            }
-        });*/
         snackbar.show();
     }
 
@@ -234,7 +228,7 @@ public class FrontActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isValidSend() {
+    /*private boolean isValidSend() {
         boolean isValid = false;
         if (mubeng == 0 && mulih == 0){
             isValid = true;
@@ -245,10 +239,29 @@ public class FrontActivity extends BaseActivity {
             //ShowSnackBar("Aktif saat jam ronda mulai pukul " + String.valueOf(mubeng) + ":00 sampai " + String.valueOf(mulih) + ":00");
         }
         return isValid;
+    }*/
+
+    private void OnDataSend(int status, String message) {
+        if (status == 200) {
+            layData.setVisibility(View.GONE);
+            btnScanner.setVisibility(View.VISIBLE);
+            try {
+                long size = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).size();
+                if (size < 1) {
+                    new Nominal(String.valueOf(nominal)).save();
+                }
+            } catch (Exception e) {
+            }
+            ShowSnackBar(message, R.color.color_green_seger);
+            edtNominal.setText("");
+            btnSubmit.setEnabled(false);
+            initCamera();
+        } else {
+            ShowSnackBar(message, R.color.colorRed);
+        }
     }
 
     private void attemptSend() {
-        //if (!isValidSend()) return;
         btnSubmit.setVisibility(View.INVISIBLE);
         send_progress.setVisibility(View.VISIBLE);
         try {
@@ -259,12 +272,11 @@ public class FrontActivity extends BaseActivity {
                     + String.valueOf(year) + String.valueOf(dayNum);
 
             mApiInterface.postJimpitanNew(
-                    generatedUniqueId,
-                    hari,
+                    generatedUniqueId,hari,
                     String.valueOf(day),
                     String.valueOf(month),
                     String.valueOf(year),
-                    String.valueOf(sJam),jam,
+                    String.valueOf(sJam), jam,
                     txtNama.getText().toString(),
                     nominal, googleaccount).enqueue(new Callback<PostJimpitan>() {
                 @Override
@@ -278,8 +290,8 @@ public class FrontActivity extends BaseActivity {
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
-                    Log.d("JIMPITAN_ERR",t.getMessage());
-                    ShowSnackBar("Periksa koneksi Internet Anda.", R.color.colorBlackGimana);
+                    //Log.d("JIMPITAN_ERR",t.getMessage());
+                    ShowSnackBar(getString(R.string.cek_koneksi), R.color.colorBlackGimana);
                 }
             });
         } catch (Exception e) {
@@ -340,11 +352,6 @@ public class FrontActivity extends BaseActivity {
         }
     }
 
-    private void startScan() {
-        initCamera();
-        btnScanner.setVisibility(View.GONE);
-    }
-
     private void initCamera() {
         layData.setVisibility(View.GONE);
         runOnUiThread(new Runnable() {
@@ -387,26 +394,6 @@ public class FrontActivity extends BaseActivity {
         }
     }
 
-    private void OnDataSend(int status, String message) {
-        if (status == 200) {
-            layData.setVisibility(View.GONE);
-            btnScanner.setVisibility(View.VISIBLE);
-            try {
-                long size = Nominal.find(Nominal.class, "val = ?", String.valueOf(nominal)).size();
-                if (size < 1) {
-                    new Nominal(String.valueOf(nominal)).save();
-                }
-            } catch (Exception e) {
-            }
-            ShowSnackBar(message, R.color.color_green_seger);
-            edtNominal.setText("");
-            btnScanner.setVisibility(View.VISIBLE);
-            btnSubmit.setEnabled(false);
-            initCamera();
-        } else {
-            ShowSnackBar(message, R.color.colorRed);
-        }
-    }
 
     private void initDate() {
         Calendar c = Calendar.getInstance();
@@ -429,7 +416,7 @@ public class FrontActivity extends BaseActivity {
         String[] daynames = getResources().getStringArray(R.array.hari);
         dayNum = c.get(Calendar.DAY_OF_WEEK);
 
-        hari = daynames[dayNum - 1]; //hariIna.format(c.getTime());
+        hari = daynames[dayNum - 1];
         txtDay.setText("Diambil pada hari, " + hari + "\n");
         txtDay.append("Tanggal, " + simpleDateFormat.format(c.getTime()) + "\n");
         txtDay.append("Pukul " + sJam + " WIB \n");
