@@ -47,6 +47,7 @@ import xyz.belvi.mobilevisionbarcodescanner.BarcodeRetriever;
 public class FrontActivity extends BaseActivity {
 
     public ApiInterface mApiInterface;
+    boolean isDataFound = false;
     private ProgressBar send_progress;
     private RelativeLayout layData;
     private ImageButton btnScanner;
@@ -63,7 +64,6 @@ public class FrontActivity extends BaseActivity {
     private int nominal = 0;
     private BarcodeCapture qrCamera;
     private int id = 0;
-
     private TextWatcher rpWatcher = new TextWatcher() {
 
         @Override
@@ -88,7 +88,8 @@ public class FrontActivity extends BaseActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    findDataById(barcode.displayValue);
+                    if (layData.getVisibility() == View.GONE)
+                        findDataById(barcode.displayValue);
                 }
             });
         }
@@ -170,6 +171,7 @@ public class FrontActivity extends BaseActivity {
                 attemptSend();
             }
         });
+
         findViewById(R.id.imgClose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,19 +230,6 @@ public class FrontActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*private boolean isValidSend() {
-        boolean isValid = false;
-        if (mubeng == 0 && mulih == 0){
-            isValid = true;
-        }else if (jam >= mubeng && jam < mulih) {
-            isValid = true;
-        } else {
-            isValid = false;
-            //ShowSnackBar("Aktif saat jam ronda mulai pukul " + String.valueOf(mubeng) + ":00 sampai " + String.valueOf(mulih) + ":00");
-        }
-        return isValid;
-    }*/
-
     private void OnDataSend(int status, String message) {
         if (status == 200) {
             layData.setVisibility(View.GONE);
@@ -253,6 +242,7 @@ public class FrontActivity extends BaseActivity {
             } catch (Exception e) {
             }
             ShowSnackBar(message, R.color.color_green_seger);
+            isDataFound = false;
             edtNominal.setText("");
             btnSubmit.setEnabled(false);
             initCamera();
@@ -272,7 +262,7 @@ public class FrontActivity extends BaseActivity {
                     + String.valueOf(year) + String.valueOf(dayNum);
 
             mApiInterface.postJimpitanNew(
-                    generatedUniqueId,hari,
+                    generatedUniqueId, hari,
                     String.valueOf(day),
                     String.valueOf(month),
                     String.valueOf(year),
@@ -290,7 +280,6 @@ public class FrontActivity extends BaseActivity {
                 public void onFailure(Call<PostJimpitan> call, Throwable t) {
                     btnSubmit.setVisibility(View.VISIBLE);
                     send_progress.setVisibility(View.GONE);
-                    //Log.d("JIMPITAN_ERR",t.getMessage());
                     ShowSnackBar(getString(R.string.cek_koneksi), R.color.colorBlackGimana);
                 }
             });
@@ -302,7 +291,7 @@ public class FrontActivity extends BaseActivity {
 
     private void rupiahHandler(Editable s) {
         if (!s.toString().isEmpty()) {
-            btnSubmit.setEnabled(true);
+            btnSubmit.setEnabled(isDataFound);
             edtNominal.removeTextChangedListener(rpWatcher);
             String rupiah = Utils.rupiah(s.toString());
             edtNominal.setText(rupiah);
@@ -380,7 +369,8 @@ public class FrontActivity extends BaseActivity {
             if (warga.size() > 0) {
                 txtNama.setText(warga.get(0).getName());
                 initDate();
-                btnSubmit.setEnabled(true);
+                isDataFound = true;
+                btnSubmit.setEnabled(isDataFound);
                 if (isVibrate()) doVibrating();
             } else {
                 send_progress.setVisibility(View.VISIBLE);
@@ -420,7 +410,7 @@ public class FrontActivity extends BaseActivity {
         dayNum = c.get(Calendar.DAY_OF_WEEK);
 
         hari = daynames[dayNum - 1];
-        txtDay.setText(hari+", " + simpleDateFormat.format(c.getTime()) + "\n");
+        txtDay.setText(hari + ", " + simpleDateFormat.format(c.getTime()) + "\n");
         txtDay.append("Pukul, " + sJam + " WIB\n");
 
     }
