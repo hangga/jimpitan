@@ -303,6 +303,12 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void initMain() {
+
+        RelativeLayout.LayoutParams prm = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        prm.addRule(RelativeLayout.CENTER_IN_PARENT);
+        prm.width = (getScreenWidth() / 2) + 80;
+        findViewById(R.id.viewFinder).setLayoutParams(prm);
+        btnScanner.setVisibility(View.VISIBLE);
         send_progress.setVisibility(View.GONE);
         btnSubmit.setEnabled(false);
         layRp.removeAllViews();

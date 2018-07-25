@@ -55,6 +55,25 @@
             app:gvb_flash="false"
             app:gvb_rect_colors="@array/rect_color"/>
 
+        <com.jimpitan.hangga.jimpitan.view.custom.SquareLayout
+            android:id="@+id/viewFinder"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_viewfinder"/>
+
+        <View
+            android:layout_width="80dp"
+            android:layout_height="1dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorAccent"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:background="@color/colorAccent"/>
+
         <RelativeLayout
             android:id="@+id/layData"
             android:layout_width="match_parent"
@@ -126,10 +145,7 @@
             android:scaleType="fitCenter"
             android:background="@color/putih"
             android:src="@mipmap/qr_biru_border"
-            android:visibility="visible"/>
-
-
-
+            android:visibility="gone"/>
 
 
         <ProgressBar
