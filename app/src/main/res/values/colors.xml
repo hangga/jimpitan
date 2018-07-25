@@ -7,6 +7,7 @@
     <color name="colorRed">#db2525</color>
     <color name="colorBlackGimana">#070606</color>
 
+    <color name="color_disable">#dddddd</color>
     <color name="color_green">#14808d</color>
     <color name="color_green_seger">#3aaa27</color>
     <color name="color_green_muda">#1479b7</color>

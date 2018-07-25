@@ -298,16 +298,18 @@ public class FrontActivity extends BaseActivity {
             btnSubmit.setVisibility(View.VISIBLE);
             send_progress.setVisibility(View.GONE);
         }
-
     }
 
     private void rupiahHandler(Editable s) {
         if (!s.toString().isEmpty()) {
+            btnSubmit.setEnabled(true);
             edtNominal.removeTextChangedListener(rpWatcher);
             String rupiah = Utils.rupiah(s.toString());
             edtNominal.setText(rupiah);
             edtNominal.setSelection(rupiah.length());
             edtNominal.addTextChangedListener(rpWatcher);
+        } else {
+            btnSubmit.setEnabled(false);
         }
     }
 
