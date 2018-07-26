@@ -182,17 +182,7 @@ public class FrontActivity extends BaseActivity {
                     edtNominal.setText("");
                 } else {
                     btnScanner.setVisibility(View.VISIBLE);
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            qrCamera.setShowDrawRect(false)
-                                    .shouldAutoFocus(true)
-                                    .setShowFlash(false)
-                                    .setBarcodeFormat(Barcode.ALL_FORMATS);
-                            qrCamera.setRetrieval(barcodeRetriever);
-                            qrCamera.refresh();
-                        }
-                    });
+                    qrCamera.stopScanning();
                     swtcFlash.setChecked(false);
                 }
             }
@@ -245,7 +235,6 @@ public class FrontActivity extends BaseActivity {
             isDataFound = false;
             edtNominal.setText("");
             btnSubmit.setEnabled(false);
-            initCamera();
         } else {
             ShowSnackBar(message, R.color.colorRed);
         }
@@ -350,6 +339,7 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void initCamera() {
+        System.gc();
         layData.setVisibility(View.GONE);
         runOnUiThread(new Runnable() {
             @Override
@@ -376,7 +366,7 @@ public class FrontActivity extends BaseActivity {
                 txtNama.setText(warga.get(0).getName());
                 initDate();
                 isDataFound = true;
-                btnSubmit.setEnabled(isDataFound);
+                btnSubmit.setEnabled(isDataFound && !edtNominal.getText().toString().isEmpty());
                 if (isVibrate()) doVibrating();
             } else {
                 send_progress.setVisibility(View.VISIBLE);
