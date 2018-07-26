@@ -35,9 +35,9 @@ public class MySwitch extends android.support.v7.widget.AppCompatImageView {
     public void setChecked(boolean checked) {
         isChecked = checked;
         if (isChecked) {
-            this.setBackgroundResource(R.mipmap.sun);
+            this.setBackgroundResource(R.drawable.ic_light_mati);
         } else {
-            this.setBackgroundResource(R.mipmap.ic_mati);
+            this.setBackgroundResource(R.drawable.ic_light_nyala);
         }
     }
 }
