@@ -181,9 +181,15 @@ public class FrontActivity extends BaseActivity {
                     nominal = 0;
                     edtNominal.setText("");
                 } else {
-                    btnScanner.setVisibility(View.VISIBLE);
-                    //qrCamera.stopScanning();
                     swtcFlash.setChecked(false);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            qrCamera.setShowFlash(swtcFlash.isChecked());
+                            qrCamera.refresh();
+                        }
+                    });
+                    btnScanner.setVisibility(View.VISIBLE);
                     System.gc();
                 }
             }
@@ -236,6 +242,16 @@ public class FrontActivity extends BaseActivity {
             isDataFound = false;
             edtNominal.setText("");
             btnSubmit.setEnabled(false);
+            swtcFlash.setChecked(false);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    qrCamera.setShowFlash(swtcFlash.isChecked());
+                    qrCamera.refresh();
+                }
+            });
+            System.gc();
+
         } else {
             ShowSnackBar(message, R.color.colorRed);
         }
