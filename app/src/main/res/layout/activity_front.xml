@@ -128,12 +128,12 @@
 
         <com.jimpitan.hangga.jimpitan.view.custom.MySwitch
             android:id="@+id/swtcFlash"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
             android:padding="4dp"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/imgClose"
-            android:layout_margin="10dp"
+            android:layout_margin="8dp"
             />
 
         <ImageButton

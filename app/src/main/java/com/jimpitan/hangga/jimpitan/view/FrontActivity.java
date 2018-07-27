@@ -182,8 +182,9 @@ public class FrontActivity extends BaseActivity {
                     edtNominal.setText("");
                 } else {
                     btnScanner.setVisibility(View.VISIBLE);
-                    qrCamera.stopScanning();
+                    //qrCamera.stopScanning();
                     swtcFlash.setChecked(false);
+                    System.gc();
                 }
             }
         });
@@ -339,7 +340,6 @@ public class FrontActivity extends BaseActivity {
     }
 
     private void initCamera() {
-        System.gc();
         layData.setVisibility(View.GONE);
         runOnUiThread(new Runnable() {
             @Override
