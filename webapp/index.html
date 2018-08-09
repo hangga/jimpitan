@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<body onload="initDate()">
+		<link rel="stylesheet" href="css/style.css">
+		<script src="js/index.js"></script>
+		
+		<h2 id="judul">Laporan Bulanan</h2>
+
+			<select id="tahun" class="button"></select> 
+			<select id="bulan" class="button"></select> 
+			<select id="tgl" class="button" onchange="switchMenu()"></select> 
+
+		<button type="button" class="button" onclick="loadData()">Tampilkan</button>
+		<br/>
+		
+		<div id="loader" style="visibility:hidden; position:absolute;"></div> 
+		<br/>
+		
+		<div id="showData"></div>
+
+		<button id="exportbutton" type="button" class="button" onclick="exportTableToExcel('mytable','laporan-jimpitan')">Export to Excel</button>
+	</body>
+</html>
+

@@ -1,12 +1,8 @@
 package com.jimpitan.hangga.jimpitan.util;
 
-import android.Manifest;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.telephony.TelephonyManager;
 
 import java.text.NumberFormat;
 import java.util.LinkedList;
@@ -41,7 +37,7 @@ public class Utils {
         return null;
     }
 
-    public static String rupiah(String s){
+    public static String rupiah(String s) {
         Locale local = new Locale("id", "id");
         String replaceable = String.format("[Rp,.\\s]",
                 NumberFormat.getCurrencyInstance().getCurrency()

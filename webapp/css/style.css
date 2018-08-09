@@ -1,0 +1,127 @@
+.button-container {
+  padding: 100px 0;
+  text-align: center;
+}
+
+.button {
+  margin-right:12px; 
+  display: inline-block;
+  padding: 7px 14px;
+  border: 1px solid #4f4f4f;
+  border-radius: 4px;
+  transition: all 0.2s ease-in;
+  position: relative;
+  overflow: hidden;
+}
+.button:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.25);
+  top: 100%;
+  width: 140%;
+  height: 180%;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+}
+.button:after {
+  content: "";
+  position: absolute;
+  left: 55%;
+  transform: translateX(-50%) scaleY(1) scaleX(1.45);
+  top: 180%;
+  width: 160%;
+  height: 190%;
+  background-color: #39bda7;
+  border-radius: 50%;
+  display: block;
+  transition: all 0.5s 0.1s cubic-bezier(0.55, 0, 0.1, 1);
+  z-index: -1;
+}
+.button:hover {
+  color: #ffffff;
+  border: 1px solid #39bda7;
+}
+.button:hover:before {
+  top: -35%;
+  background-color: #39bda7;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+.button:hover:after {
+  top: -45%;
+  background-color: #39bda7;
+  transform: translateX(-50%) scaleY(1.3) scaleX(0.8);
+}
+
+
+h2{
+  color: #f4f4f4;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+  background: #2b2b2b;
+}
+
+#loader {
+  position:fixed;
+  top: 30%;
+  left : 210px;  
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 100px;
+  height: 100px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.mytable {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    //border-collapse: collapse;
+    width: 100%;
+    background: #ffffff;
+
+    border-collapse:separate;
+    border:solid black 1px;
+    border-radius:6px;
+    -moz-border-radius:6px;
+}
+
+.mytable td, .mytable th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    word-wrap:break-word;
+}
+
+.mytable tr:nth-child(even){background-color: #f2f2f2;}
+
+.mytable tr:hover {background-color: #f4f4f4;}
+
+.mytable th {
+  margin-top: 20px; 
+    padding-top: 6px;
+    padding-bottom: 6px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}

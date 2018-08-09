@@ -30,10 +30,23 @@ GET : https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36-
 GET : https://script.google.com/macros/s/AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=config
 
 
-4. Query Per Orang
+
+4. Get Laporan Bulanan/Harian
+===========================================
+
+GET     : https://script.google.com/macros/s/AKfycby677qxY4tbBfjjDnwjFSCJ00N1yo4iu0qDKCr21qXhLdKTEIuo/exec
+param   : {tgl<optional>, bulan, tahun}
+
+https://script.google.com/macros/s/AKfycby677qxY4tbBfjjDnwjFSCJ00N1yo4iu0qDKCr21qXhLdKTEIuo/exec?bulan=7&tahun=2018
+https://script.google.com/macros/s/AKfycby677qxY4tbBfjjDnwjFSCJ00N1yo4iu0qDKCr21qXhLdKTEIuo/exec?bulan=7&tahun=2018&tgl=25
+
+
+5. Yen pengen Query Dewe
+==========================================
 =query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "'"; 1)
 =query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "'"; 1)
 =query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "'"; 1)
 =query(jimpit!A:H; "select G, SUM(H) WHERE D =  " & L5 & " and E =  " & L4 & ""; 1)
 =query(jimpit!A:H; "select B, C, D, E, F, G, H WHERE G = '" & L6 & "', C = '" & L4 & "', D = '" & L5 & "' "; 1)
+
 

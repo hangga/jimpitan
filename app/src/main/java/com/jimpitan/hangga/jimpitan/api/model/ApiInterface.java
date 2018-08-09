@@ -15,7 +15,7 @@ public interface ApiInterface {
     Call<Getwarga> getWarga();
 
 
-    @GET("AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=config")
+    /*@GET("AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=config")
     Call<Getconfig> getConfig();
 
     @FormUrlEncoded
@@ -29,7 +29,7 @@ public interface ApiInterface {
                                   @Field("nama") String nama,
                                   @Field("nominal") int nominal,
                                   @Field("submitby") String submitby
-    );
+    );*/
 
     @FormUrlEncoded
     @POST("AKfycbyPZ7AneiiqCLAo0wxxY5u8zj_FYxJOkkqX5gqiJ5gNXXoanuw/exec")
