@@ -1,20 +1,20 @@
+Spesifikasi Backend sing dibutuhke
+
+API Endpoint    : https://api.embuh.sakkarepmu.co
+
 1. FIND WARGA by ID
 ====================
-API Endpoint    : https://api.embuh.sakkarepmu.co
-METHOD          : POST
+METHOD          : GET
 PARAM           : id_warga
 JSON Response   :
 
-[
-  {
+{
     "nama": "Agus (Kontrakan Henry)",
     "sum nominal": 2000
-  }
-]
+}
 
 2. INSERT JIMPITAN
 ======================
-API Endpoint    : https://api.embuh.sakkarepmu.co
 METHOD          : POST
 PARAM           : id_warga, nominal
 FLOW            : Cari data jimpitan terbaru berdasar id_warga & waktu, jika belum ada -> insert -> jika sudah ada -> edit 
@@ -22,9 +22,7 @@ FLOW            : Cari data jimpitan terbaru berdasar id_warga & waktu, jika bel
 
 3. LAPORAN BULANAN & HARIAN
 ============================
-
-API Endpoint    : https://api.embuh.sakkarepmu.com
-METHOD          : POST
+METHOD          : GET
 PARAM           : tgl, bulan, tahun
 JSON Response   :
 
