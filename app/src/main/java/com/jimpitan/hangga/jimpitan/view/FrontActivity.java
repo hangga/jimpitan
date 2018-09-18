@@ -405,16 +405,6 @@ public class FrontActivity extends BaseActivity {
 
                     }
                 });
-
-
-
-                syncData(new OnFinishListener() {
-                    @Override
-                    public void OnFinish() {
-                        findDataById(sid);
-                        send_progress.setVisibility(View.GONE);
-                    }
-                });
             }
         } catch (Exception e) {
 
