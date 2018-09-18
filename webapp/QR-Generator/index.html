@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+	<body>
+		<script src='http://danml.com/js/download.js'></script>
+		<script>
+		
+			var QR_API = "https://chart.googleapis.com/chart?chs=500x500&cht=qr&chl=";
+			var filename = "";
+			var nama = "";
+			var img;
+			function GenerateQR() {
+				var id = document.getElementById("id").value;
+				nama = document.getElementById("nama").value;
+				filename = nama;
+				var divContainer = document.getElementById("showData");
+				divContainer.innerHTML = "";
+				img = document.createElement("IMG");
+				img.setAttribute("src", QR_API + id);
+			    img.setAttribute("width", "500");
+			    img.setAttribute("height", "500");		
+				divContainer.appendChild(img);
+				download(img, nama+".png", "image/png");
+			}
+
+			function unduh(){
+				download("data:image/png"+img, nama+".png", "image/png");
+			}
+
+		</script>
+		
+
+		Id: <br/><input type="text" name="id" id="id" /><br/>
+		Nama : <br/><input type="text" name="nama" id="nama" />
+		<button type="button" onclick="GenerateQR()">Generate</button>
+		<div id="showData"><img /></div> 
+	</body>
+</html>

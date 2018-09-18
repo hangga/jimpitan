@@ -1,0 +1,52 @@
+1. FIND WARGA by ID
+====================
+API Endpoint    : https://api.embuh.sakkarepmu.co
+METHOD          : POST
+PARAM           : id_warga
+JSON Response   :
+
+[
+  {
+    "nama": "Agus (Kontrakan Henry)",
+    "sum nominal": 2000
+  }
+]
+
+2. INSERT JIMPITAN
+======================
+API Endpoint    : https://api.embuh.sakkarepmu.co
+METHOD          : POST
+PARAM           : id_warga, nominal
+FLOW            : Cari data jimpitan terbaru berdasar id_warga & waktu, jika belum ada -> insert -> jika sudah ada -> edit 
+
+
+3. LAPORAN BULANAN & HARIAN
+============================
+
+API Endpoint    : https://api.embuh.sakkarepmu.com
+METHOD          : POST
+PARAM           : tgl, bulan, tahun
+JSON Response   :
+
+[
+  {
+    "nama": "Agus (Kontrakan Henry)",
+    "sum nominal": 2000
+  },
+  {
+    "nama": "Agung Rintoko",
+    "sum nominal": 1500
+  },
+  {
+    "nama": "Alis Suyanto",
+    "sum nominal": 1500
+  },
+  {
+    "nama": "Adiyanto",
+    "sum nominal": 1000
+  },
+  {
+    "nama": "Anggit Silver",
+    "sum nominal": 1000
+  }
+]

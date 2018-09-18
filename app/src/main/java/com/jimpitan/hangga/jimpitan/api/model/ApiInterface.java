@@ -12,6 +12,9 @@ import retrofit2.http.POST;
 
 public interface ApiInterface {
     @GET("AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=warga")
+    Call<Warga> findWarga();
+
+    @GET("AKfycbzrUOP5IYWEsNfMP6YkkdowGGetZatt36--txlsHtDnbtudnXB1/exec?sheet=warga")
     Call<Getwarga> getWarga();
 
 

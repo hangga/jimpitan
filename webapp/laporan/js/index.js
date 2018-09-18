@@ -25,7 +25,7 @@ function initDate(){
         optn.text = monthArray[m];
         optn.value = (m+1);
      
-        if ( m == currentMonth-1) {
+        if ( m == currentMonth) {
             optn.selected = true;
         }
      
