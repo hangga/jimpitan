@@ -386,11 +386,23 @@ public class FrontActivity extends BaseActivity {
                 if (isVibrate()) doVibrating();
             } else {
                 send_progress.setVisibility(View.VISIBLE);
-                syncData(new OnFinishListener() {
+                mApiInterface.findWarga().enqueue(new Callback<com.jimpitan.hangga.jimpitan.api.model.Warga>() {
                     @Override
-                    public void OnFinish() {
-                        findDataById(sid);
+                    public void onResponse(Call<com.jimpitan.hangga.jimpitan.api.model.Warga> call, Response<com.jimpitan.hangga.jimpitan.api.model.Warga> response) {
+                        initDate();
+                        int id = response.body().getId();
+                        String nama = response.body().getNama();
+                        txtNama.setText(nama);
+                        isDataFound = true;
+                        btnSubmit.setEnabled(isDataFound && !edtNominal.getText().toString().isEmpty());
+                        if (isVibrate()) doVibrating();
+                        new Warga(id, nama).save();
                         send_progress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onFailure(Call<com.jimpitan.hangga.jimpitan.api.model.Warga> call, Throwable t) {
+
                     }
                 });
             }
